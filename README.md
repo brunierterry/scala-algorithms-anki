@@ -6,7 +6,7 @@ Le repository garde la **source canonique en JSON lisible et diffable**. Le fich
 
 ## Contenu actuel
 
-**142 cartes** dans un seul deck, avec tags hiérarchiques.
+**146 cartes** dans un seul deck, avec tags hiérarchiques.
 
 Types de cartes :
 
@@ -97,7 +97,7 @@ dist/scala-algorithms-anki.apkg
 Un build réussi affiche par exemple :
 
 ```text
-Built 142 cards -> .../dist/scala-algorithms-anki.apkg
+Built 146 cards -> .../dist/scala-algorithms-anki.apkg
 ```
 
 Le build sert aussi de validation. Il n’y a volontairement pas un second script à retenir :
