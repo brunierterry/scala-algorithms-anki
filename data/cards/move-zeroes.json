@@ -1,0 +1,74 @@
+[
+  {
+    "id": "signal-stable-in-place-compaction",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::array",
+      "topic::two-pointers",
+      "topic::compaction"
+    ],
+    "question": "Signal : « Garder certains éléments au début d’un Array, dans le même ordre, sans créer un second Array » — quel réflexe ?",
+    "answer": {
+      "reflex": "Deux indices : un index de lecture et un index d’écriture.",
+      "template": "var writeIndex = 0\n\nfor (readIndex <- values.indices) {\n  val currentValue = values(readIndex)\n\n  if (shouldKeep(currentValue)) {\n    values(writeIndex) = currentValue\n    writeIndex += 1\n  }\n}",
+      "example": {
+        "prompt": "Exercice : déplacer tous les zéros à la fin de l’Array en conservant l’ordre des valeurs non nulles.",
+        "code": "def moveZeroes(numbers: Array[Int]): Unit = {\n  var writeIndex = 0\n\n  for (readIndex <- numbers.indices) {\n    val currentNumber = numbers(readIndex)\n\n    if (currentNumber != 0) {\n      numbers(writeIndex) = currentNumber\n      writeIndex += 1\n    }\n  }\n\n  while (writeIndex < numbers.length) {\n    numbers(writeIndex) = 0\n    writeIndex += 1\n  }\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-move-zeroes",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::array",
+      "topic::two-pointers",
+      "topic::move-zeroes"
+    ],
+    "question": "Signal : « Déplacer les zéros à la fin tout en conservant l’ordre des autres valeurs » — quel réflexe ?",
+    "answer": {
+      "reflex": "Compacter les non-zéros avec readIndex/writeIndex, puis remplir le reste avec des zéros.",
+      "template": "var writeIndex = 0\n\nfor (readIndex <- numbers.indices) {\n  if (numbers(readIndex) != 0) {\n    numbers(writeIndex) = numbers(readIndex)\n    writeIndex += 1\n  }\n}\n\nwhile (writeIndex < numbers.length) {\n  numbers(writeIndex) = 0\n  writeIndex += 1\n}",
+      "example": {
+        "prompt": "Exercice : transformer [0, 1, 0, 3, 12] en [1, 3, 12, 0, 0] in-place.",
+        "code": "def moveZeroes(numbers: Array[Int]): Unit = {\n  var writeIndex = 0\n\n  for (readIndex <- numbers.indices) {\n    val currentNumber = numbers(readIndex)\n\n    if (currentNumber != 0) {\n      numbers(writeIndex) = currentNumber\n      writeIndex += 1\n    }\n  }\n\n  while (writeIndex < numbers.length) {\n    numbers(writeIndex) = 0\n    writeIndex += 1\n  }\n}"
+      }
+    }
+  },
+  {
+    "id": "error-skipped-offset-not-used",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::array",
+      "topic::move-zeroes",
+      "topic::index"
+    ],
+    "question": "Corrige l’erreur logique : `countZero` augmente lorsqu’un zéro est sauté, mais la boucle relit toujours le même élément.",
+    "answer": {
+      "reflex": "Si `index` compte les non-zéros consommés et `countZero` les zéros sautés, l’index réel lu est `index + countZero`.",
+      "code": "if (index + countZero >= refArray.length) {\n  nums(newIndex) = 0\n  newIndex += 1\n} else if (refArray(index + countZero) != 0) {\n  nums(newIndex) = refArray(index + countZero)\n  newIndex += 1\n  index += 1\n} else {\n  countZero += 1\n}"
+    },
+    "front_code": "if (refArray(index) != 0) {\n  nums(newIndex) = refArray(index)\n  newIndex += 1\n  index += 1\n} else {\n  countZero += 1\n}\n\n// Problème : après un zéro, refArray(index) lit encore le même zéro."
+  },
+  {
+    "id": "thinking-read-write-invariant",
+    "type": "thinking",
+    "tags": [
+      "type::thinking",
+      "topic::array",
+      "topic::two-pointers",
+      "topic::invariant"
+    ],
+    "question": "Lors d’une compaction in-place avec readIndex/writeIndex, quel invariant permet d’écrire sans détruire une valeur encore non lue ?",
+    "answer": {
+      "reflex": "Toujours maintenir `writeIndex <= readIndex`.",
+      "example": {
+        "prompt": "Dans Move Zeroes, chaque écriture se fait sur une position déjà lue ou sur la position courante ; aucune valeur située dans le futur de la lecture n’est écrasée.",
+        "code": "var writeIndex = 0\n\nfor (readIndex <- numbers.indices) {\n  val currentNumber = numbers(readIndex)\n\n  if (currentNumber != 0) {\n    // Invariant : writeIndex <= readIndex\n    numbers(writeIndex) = currentNumber\n    writeIndex += 1\n  }\n}"
+      }
+    }
+  }
+]
