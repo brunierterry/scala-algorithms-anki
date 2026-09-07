@@ -1,0 +1,24 @@
+name: Build Anki deck
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Build deck
+        run: python scripts/build_deck.py
+      - name: Upload APKG
+        uses: actions/upload-artifact@v4
+        with:
+          name: scala-algorithms-anki
+          path: dist/scala-algorithms-anki.apkg

@@ -1,0 +1,214 @@
+[
+  {
+    "id": "import-mutable-queue",
+    "type": "import",
+    "tags": ["type::import", "topic::queue", "topic::tree"],
+    "question": "Quel import complet utiliser pour une Queue mutable en Scala 2.13 ?",
+    "answer": {
+      "reflex": "Importer `scala.collection.mutable.Queue`.",
+      "code": "import scala.collection.mutable.Queue"
+    }
+  },
+  {
+    "id": "tip-tree-node-mutable-model",
+    "type": "tip",
+    "tags": ["type::tip", "topic::tree", "topic::mutability"],
+    "question": "Comment raisonner sur un `TreeNode` mutable de plateforme sans se compliquer la vie ?",
+    "answer": {
+      "reflex": "Lire `value`, `left`, `right` comme trois champs ; ne muter les liens que si l’exercice le demande explicitement.",
+      "code": "class TreeNode(\n    var value: Int,\n    var left: TreeNode = null,\n    var right: TreeNode = null\n)\n\nval currentValue = node.value\nval leftChild = node.left\nval rightChild = node.right"
+    }
+  },
+  {
+    "id": "signal-tree-recursive-dfs",
+    "type": "signal",
+    "tags": ["type::signal", "topic::tree", "topic::dfs", "topic::recursion"],
+    "question": "Signal : « calculer quelque chose sur chaque sous-arbre » — quel réflexe ?",
+    "answer": {
+      "reflex": "DFS récursif : cas `null`, résoudre gauche, résoudre droite, combiner.",
+      "template": "def solve(node: TreeNode): Result = {\n  if (node == null) {\n    return baseResult\n  }\n\n  val leftResult = solve(node.left)\n  val rightResult = solve(node.right)\n\n  combine(node.value, leftResult, rightResult)\n}",
+      "example": {
+        "prompt": "Exercice : compter le nombre total de nœuds d’un arbre binaire.",
+        "code": "def countNodes(node: TreeNode): Int = {\n  if (node == null) {\n    return 0\n  }\n\n  val leftNodeCount = countNodes(node.left)\n  val rightNodeCount = countNodes(node.right)\n\n  1 + leftNodeCount + rightNodeCount\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-tree-inorder-traversal",
+    "type": "signal",
+    "tags": ["type::signal", "topic::tree", "topic::dfs", "topic::bst"],
+    "question": "Signal : « parcourir un BST dans l’ordre croissant » — quel réflexe ?",
+    "answer": {
+      "reflex": "In-order : gauche → nœud → droite.",
+      "template": "traverse(node.left)\nvisit(node.value)\ntraverse(node.right)",
+      "example": {
+        "prompt": "Exercice : retourner les valeurs d’un arbre binaire dans l’ordre in-order.",
+        "code": "import scala.collection.mutable.ArrayBuffer\n\ndef inorderTraversal(root: TreeNode): Array[Int] = {\n  val result = ArrayBuffer.empty[Int]\n\n  def traverse(node: TreeNode): Unit = {\n    if (node == null) {\n      return\n    }\n\n    traverse(node.left)\n    result += node.value\n    traverse(node.right)\n  }\n\n  traverse(root)\n  result.toArray\n}"
+      },
+      "note": "Pour un BST valide, l’in-order produit les valeurs triées par ordre croissant."
+    }
+  },
+  {
+    "id": "signal-tree-max-depth",
+    "type": "signal",
+    "tags": ["type::signal", "topic::tree", "topic::recursion"],
+    "question": "Signal : « profondeur / hauteur maximale d’un arbre » — quel réflexe ?",
+    "answer": {
+      "reflex": "Retourner `1 + max(profondeur gauche, profondeur droite)` ; `null` vaut 0.",
+      "template": "if (node == null) return 0\n\nval leftDepth = maxDepth(node.left)\nval rightDepth = maxDepth(node.right)\n1 + math.max(leftDepth, rightDepth)",
+      "example": {
+        "prompt": "Exercice : calculer la profondeur maximale d’un arbre binaire.",
+        "code": "def maxDepth(node: TreeNode): Int = {\n  if (node == null) {\n    return 0\n  }\n\n  val leftDepth = maxDepth(node.left)\n  val rightDepth = maxDepth(node.right)\n\n  1 + math.max(leftDepth, rightDepth)\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-tree-path-sum",
+    "type": "signal",
+    "tags": ["type::signal", "topic::tree", "topic::dfs", "topic::path"],
+    "question": "Signal : « existe-t-il un chemin racine → feuille avec une somme target ? » — quel réflexe ?",
+    "answer": {
+      "reflex": "DFS en transmettant la somme restante aux enfants.",
+      "template": "val remainingTarget = target - node.value\nreturn hasPath(node.left, remainingTarget) ||\n  hasPath(node.right, remainingTarget)",
+      "example": {
+        "prompt": "Exercice : retourner true si un chemin racine → feuille somme exactement à target.",
+        "code": "def hasPathSum(node: TreeNode, target: Int): Boolean = {\n  if (node == null) {\n    return false\n  }\n\n  val isLeaf = node.left == null && node.right == null\n  if (isLeaf) {\n    return node.value == target\n  }\n\n  val remainingTarget = target - node.value\n\n  hasPathSum(node.left, remainingTarget) ||\n    hasPathSum(node.right, remainingTarget)\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-tree-level-order-bfs",
+    "type": "signal",
+    "tags": ["type::signal", "topic::tree", "topic::bfs", "topic::queue"],
+    "question": "Signal : « traiter l’arbre niveau par niveau » — quel réflexe ?",
+    "answer": {
+      "reflex": "BFS avec Queue ; pour chaque niveau, traiter exactement `queue.size` nœuds.",
+      "template": "val currentLevelSize = queue.size\nfor (_ <- 0 until currentLevelSize) {\n  val currentNode = queue.dequeue()\n  // ajouter ses enfants\n}",
+      "example": {
+        "prompt": "Exercice : retourner les valeurs d’un arbre groupées par niveau.",
+        "code": "import scala.collection.mutable.ArrayBuffer\nimport scala.collection.mutable.Queue\n\ndef levelOrder(root: TreeNode): Array[Array[Int]] = {\n  if (root == null) {\n    return Array.empty[Array[Int]]\n  }\n\n  val result = ArrayBuffer.empty[Array[Int]]\n  val queue = Queue(root)\n\n  while (queue.nonEmpty) {\n    val currentLevelSize = queue.size\n    val currentLevelValues = ArrayBuffer.empty[Int]\n\n    for (_ <- 0 until currentLevelSize) {\n      val currentNode = queue.dequeue()\n      currentLevelValues += currentNode.value\n\n      if (currentNode.left != null) {\n        queue.enqueue(currentNode.left)\n      }\n      if (currentNode.right != null) {\n        queue.enqueue(currentNode.right)\n      }\n    }\n\n    result += currentLevelValues.toArray\n  }\n\n  result.toArray\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-bst-search",
+    "type": "signal",
+    "tags": ["type::signal", "topic::tree", "topic::bst"],
+    "question": "Signal : « retrouver une valeur dans un BST » — quel réflexe ?",
+    "answer": {
+      "reflex": "Comparer à la valeur du nœud ; plus petit → gauche, plus grand → droite.",
+      "template": "while (currentNode != null) {\n  if (target == currentNode.value) return currentNode\n  if (target < currentNode.value) currentNode = currentNode.left\n  else currentNode = currentNode.right\n}",
+      "example": {
+        "prompt": "Exercice : retourner le nœud contenant `target`, ou `null` s’il n’existe pas.",
+        "code": "def searchBST(root: TreeNode, target: Int): TreeNode = {\n  var currentNode = root\n\n  while (currentNode != null) {\n    if (target == currentNode.value) {\n      return currentNode\n    } else if (target < currentNode.value) {\n      currentNode = currentNode.left\n    } else {\n      currentNode = currentNode.right\n    }\n  }\n\n  null\n}"
+      },
+      "note": "Temps moyen O(h), où h est la hauteur. Dans un BST équilibré, h ≈ log n ; dans le pire cas dégénéré, h = n."
+    }
+  },
+  {
+    "id": "signal-validate-bst-bounds",
+    "type": "signal",
+    "tags": ["type::signal", "topic::tree", "topic::bst", "topic::recursion"],
+    "question": "Signal : « vérifier qu’un arbre respecte globalement les règles d’un BST » — quel réflexe ?",
+    "answer": {
+      "reflex": "Propager une borne minimale et une borne maximale valides à chaque sous-arbre.",
+      "template": "def validate(node: TreeNode, minimum: Long, maximum: Long): Boolean = {\n  if (node == null) return true\n  if (node.value <= minimum || node.value >= maximum) return false\n\n  validate(node.left, minimum, node.value.toLong) &&\n    validate(node.right, node.value.toLong, maximum)\n}",
+      "example": {
+        "prompt": "Exercice : déterminer si tout l’arbre est un BST valide, pas seulement chaque relation parent/enfant.",
+        "code": "def isValidBST(root: TreeNode): Boolean = {\n  def validate(node: TreeNode, minimum: Long, maximum: Long): Boolean = {\n    if (node == null) {\n      return true\n    }\n\n    val currentValue = node.value.toLong\n    if (currentValue <= minimum || currentValue >= maximum) {\n      return false\n    }\n\n    validate(node.left, minimum, currentValue) &&\n      validate(node.right, currentValue, maximum)\n  }\n\n  validate(root, Long.MinValue, Long.MaxValue)\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-bst-lowest-common-ancestor",
+    "type": "signal",
+    "tags": ["type::signal", "topic::tree", "topic::bst", "topic::lca"],
+    "question": "Signal : « plus bas ancêtre commun de deux valeurs dans un BST » — quel réflexe ?",
+    "answer": {
+      "reflex": "Si les deux valeurs sont plus petites, aller à gauche ; plus grandes, aller à droite ; sinon le nœud courant est le point de séparation.",
+      "template": "if (firstValue < currentNode.value && secondValue < currentNode.value) {\n  currentNode = currentNode.left\n} else if (firstValue > currentNode.value && secondValue > currentNode.value) {\n  currentNode = currentNode.right\n} else {\n  return currentNode\n}",
+      "example": {
+        "prompt": "Exercice : trouver le Lowest Common Ancestor de deux nœuds dans un BST.",
+        "code": "def lowestCommonAncestor(root: TreeNode, firstValue: Int, secondValue: Int): TreeNode = {\n  var currentNode = root\n\n  while (currentNode != null) {\n    if (firstValue < currentNode.value && secondValue < currentNode.value) {\n      currentNode = currentNode.left\n    } else if (firstValue > currentNode.value && secondValue > currentNode.value) {\n      currentNode = currentNode.right\n    } else {\n      return currentNode\n    }\n  }\n\n  null\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-balanced-binary-tree",
+    "type": "signal",
+    "tags": ["type::signal", "topic::tree", "topic::recursion", "topic::height"],
+    "question": "Signal : « vérifier que chaque sous-arbre reste équilibré » — quel réflexe ?",
+    "answer": {
+      "reflex": "Post-order : calculer les hauteurs depuis les feuilles ; retourner `-1` dès qu’un sous-arbre est déséquilibré.",
+      "template": "val leftHeight = heightOrInvalid(node.left)\nif (leftHeight == -1) return -1\n\nval rightHeight = heightOrInvalid(node.right)\nif (rightHeight == -1) return -1\n\nif (math.abs(leftHeight - rightHeight) > 1) return -1\n1 + math.max(leftHeight, rightHeight)",
+      "example": {
+        "prompt": "Exercice : déterminer si un arbre binaire est height-balanced en O(n).",
+        "code": "def isBalanced(root: TreeNode): Boolean = {\n  def heightOrInvalid(node: TreeNode): Int = {\n    if (node == null) {\n      return 0\n    }\n\n    val leftHeight = heightOrInvalid(node.left)\n    if (leftHeight == -1) {\n      return -1\n    }\n\n    val rightHeight = heightOrInvalid(node.right)\n    if (rightHeight == -1) {\n      return -1\n    }\n\n    if (math.abs(leftHeight - rightHeight) > 1) {\n      return -1\n    }\n\n    1 + math.max(leftHeight, rightHeight)\n  }\n\n  heightOrInvalid(root) != -1\n}"
+      }
+    }
+  },
+  {
+    "id": "difference-tree-dfs-vs-bfs",
+    "type": "difference",
+    "tags": ["type::difference", "topic::tree", "topic::dfs", "topic::bfs"],
+    "question": "DFS ou BFS sur un arbre : quand utiliser lequel ?",
+    "answer": {
+      "reflex": "DFS pour calculer/composer une propriété de sous-arbres ; BFS quand la notion de niveau ou de distance depuis la racine est centrale.",
+      "bullets": [
+        "DFS récursif : souvent le plus simple pour profondeur, somme de chemin, validation, propriétés gauche/droite.",
+        "BFS + Queue : niveau par niveau, première occurrence à profondeur minimale, regroupement par niveaux.",
+        "Les deux visitent typiquement O(n) nœuds ; le choix vise surtout la structure du raisonnement."
+      ]
+    }
+  },
+  {
+    "id": "difference-binary-tree-vs-bst",
+    "type": "difference",
+    "tags": ["type::difference", "topic::tree", "topic::bst"],
+    "question": "Binary Tree vs Binary Search Tree : quelle différence algorithmique essentielle ?",
+    "answer": {
+      "reflex": "Un Binary Tree n’impose pas d’ordre ; un BST impose gauche < nœud < droite et permet d’éliminer une branche lors d’une recherche.",
+      "bullets": [
+        "Binary Tree général : pour retrouver une valeur arbitraire, il faut potentiellement visiter O(n) nœuds.",
+        "BST équilibré : recherche/insertion typiquement O(log n) grâce à la propriété d’ordre.",
+        "BST dégénéré : pire cas O(n)."
+      ]
+    }
+  },
+  {
+    "id": "error-tree-missing-null-base-case",
+    "type": "error",
+    "tags": ["type::error", "topic::tree", "topic::recursion"],
+    "question": "Corrige l’erreur : cette récursion finit par appeler la méthode avec `node == null`.",
+    "front_code": "def maxDepth(node: TreeNode): Int = {\n  1 + math.max(maxDepth(node.left), maxDepth(node.right))\n}",
+    "answer": {
+      "reflex": "Tout DFS récursif sur TreeNode doit avoir un cas de base pour `null`.",
+      "code": "def maxDepth(node: TreeNode): Int = {\n  if (node == null) {\n    return 0\n  }\n\n  1 + math.max(maxDepth(node.left), maxDepth(node.right))\n}"
+    }
+  },
+  {
+    "id": "error-validate-bst-parent-only",
+    "type": "error",
+    "tags": ["type::error", "topic::tree", "topic::bst"],
+    "question": "Corrige l’erreur logique : comparer seulement un enfant à son parent ne suffit pas pour valider un BST.",
+    "front_code": "val leftIsValid = node.left == null || node.left.value < node.value\nval rightIsValid = node.right == null || node.right.value > node.value",
+    "answer": {
+      "reflex": "Chaque nœud doit respecter toutes les contraintes de ses ancêtres : propager `minimum` et `maximum`.",
+      "code": "def validate(node: TreeNode, minimum: Long, maximum: Long): Boolean = {\n  if (node == null) {\n    return true\n  }\n\n  val currentValue = node.value.toLong\n  if (currentValue <= minimum || currentValue >= maximum) {\n    return false\n  }\n\n  validate(node.left, minimum, currentValue) &&\n    validate(node.right, currentValue, maximum)\n}"
+    }
+  },
+  {
+    "id": "thinking-tree-recursive-contract",
+    "type": "thinking",
+    "tags": ["type::thinking", "topic::tree", "topic::recursion"],
+    "question": "Avant d’écrire une récursion sur un arbre, quelle question se poser ?",
+    "answer": {
+      "reflex": "Définir en une phrase ce que l’appel récursif retourne pour un sous-arbre, puis combiner gauche et droite.",
+      "bullets": [
+        "Exemple profondeur : « maxDepth(node) retourne la profondeur de ce sous-arbre ».",
+        "Exemple validation : « validate(node, min, max) dit si tout ce sous-arbre respecte ces bornes ».",
+        "Le cas `null` doit retourner l’élément neutre correspondant : 0, true, false, etc."
+      ]
+    }
+  }
+]

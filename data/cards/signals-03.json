@@ -1,0 +1,178 @@
+[
+  {
+    "id": "signal-seen-value",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::hashset"
+    ],
+    "question": "Signal : « Ai-je déjà vu cette valeur ? » — quel réflexe ?",
+    "answer": {
+      "reflex": "HashSet.",
+      "template": "import scala.collection.mutable.HashSet\n\nval seenValues = HashSet.empty[Int]\n\nif (seenValues.contains(currentValue)) {\n  // déjà vu\n} else {\n  seenValues += currentValue\n}",
+      "example": {
+        "prompt": "Exercice : retourner true dès qu’un Array contient un doublon.",
+        "code": "import scala.collection.mutable.HashSet\n\ndef containsDuplicate(numbers: Array[Int]): Boolean = {\n  val seenNumbers = HashSet.empty[Int]\n\n  for (number <- numbers) {\n    if (seenNumbers.contains(number)) {\n      return true\n    }\n    seenNumbers += number\n  }\n\n  false\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-sort-and-scan",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::sorting"
+    ],
+    "question": "Signal : « L’ordre d’origine n’importe pas et les voisins après tri deviennent informatifs » — quel réflexe ?",
+    "answer": {
+      "reflex": "Trier puis faire un seul scan.",
+      "template": "val sortedValues = values.sorted\nfor (currentIndex <- 1 until sortedValues.length) {\n  // comparer sortedValues(currentIndex - 1) et sortedValues(currentIndex)\n}",
+      "example": {
+        "prompt": "Exercice : trouver le plus petit écart absolu entre deux nombres.",
+        "code": "def minimumDifference(numbers: Array[Int]): Int = {\n  val sortedNumbers = numbers.sorted\n  var bestDifference = Int.MaxValue\n\n  for (currentIndex <- 1 until sortedNumbers.length) {\n    val currentDifference = sortedNumbers(currentIndex) - sortedNumbers(currentIndex - 1)\n    bestDifference = math.min(bestDifference, currentDifference)\n  }\n\n  bestDifference\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-spiral-matrix",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::matrix",
+      "topic::simulation"
+    ],
+    "question": "Signal : « Parcourir une matrice en spirale » — quel réflexe ?",
+    "answer": {
+      "reflex": "Quatre bornes : top, bottom, left, right ; réduire la bordure après chaque côté.",
+      "template": "var topRow = 0\nvar bottomRow = matrix.length - 1\nvar leftColumn = 0\nvar rightColumn = matrix(0).length - 1",
+      "example": {
+        "prompt": "Exercice : retourner les éléments d’une matrice dans l’ordre spiral.",
+        "code": "import scala.collection.mutable.ArrayBuffer\n\ndef spiralOrder(matrix: Array[Array[Int]]): Array[Int] = {\n  val result = ArrayBuffer.empty[Int]\n  var topRow = 0\n  var bottomRow = matrix.length - 1\n  var leftColumn = 0\n  var rightColumn = matrix(0).length - 1\n\n  while (topRow <= bottomRow && leftColumn <= rightColumn) {\n    for (columnIndex <- leftColumn to rightColumn) {\n      result += matrix(topRow)(columnIndex)\n    }\n    topRow += 1\n\n    for (rowIndex <- topRow to bottomRow) {\n      result += matrix(rowIndex)(rightColumn)\n    }\n    rightColumn -= 1\n\n    if (topRow <= bottomRow) {\n      for (columnIndex <- rightColumn to leftColumn by -1) {\n        result += matrix(bottomRow)(columnIndex)\n      }\n      bottomRow -= 1\n    }\n\n    if (leftColumn <= rightColumn) {\n      for (rowIndex <- bottomRow to topRow by -1) {\n        result += matrix(rowIndex)(leftColumn)\n      }\n      leftColumn += 1\n    }\n  }\n\n  result.toArray\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-stack-brackets",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::stack",
+      "topic::string"
+    ],
+    "question": "Signal : « Ouvertures et fermetures doivent être correctement imbriquées » — quel réflexe ?",
+    "answer": {
+      "reflex": "Pile LIFO.",
+      "template": "val openingCharacters = scala.collection.mutable.ArrayBuffer.empty[Char]\n// ajouter une ouverture ; retirer la dernière pour une fermeture",
+      "example": {
+        "prompt": "Exercice : vérifier `()[]{}` bien imbriqués.",
+        "code": "import scala.collection.mutable.ArrayBuffer\n\ndef hasValidBrackets(text: String): Boolean = {\n  val stack = ArrayBuffer.empty[Char]\n  val openingByClosing = Map(')' -> '(', ']' -> '[', '}' -> '{')\n\n  for (character <- text) {\n    if (openingByClosing.values.toSet.contains(character)) {\n      stack += character\n    } else if (openingByClosing.contains(character)) {\n      if (stack.isEmpty || stack.last != openingByClosing(character)) {\n        return false\n      }\n      stack.remove(stack.length - 1)\n    }\n  }\n\n  stack.isEmpty\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-subarray-sum-negatives",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::prefix-sum",
+      "topic::hashmap"
+    ],
+    "question": "Signal : « Sous-tableau de somme target avec nombres potentiellement négatifs » — quel réflexe ?",
+    "answer": {
+      "reflex": "Prefix sum + HashMap des sommes déjà vues.",
+      "template": "var runningSum = 0L\nval firstIndexByPrefixSum = HashMap(0L -> -1)\n\nrunningSum += currentNumber\nval requiredPrefix = runningSum - target",
+      "example": {
+        "prompt": "Exercice : existe-t-il un sous-tableau contigu dont la somme vaut target, même avec des valeurs négatives ?",
+        "code": "import scala.collection.mutable.HashMap\n\ndef hasSubarrayWithTargetSum(numbers: Array[Int], target: Int): Boolean = {\n  var runningSum = 0L\n  val firstIndexByPrefixSum = HashMap[Long, Int](0L -> -1)\n\n  for (currentIndex <- numbers.indices) {\n    runningSum += numbers(currentIndex)\n    val requiredPrefixSum = runningSum - target\n\n    if (firstIndexByPrefixSum.contains(requiredPrefixSum)) {\n      return true\n    }\n\n    if (!firstIndexByPrefixSum.contains(runningSum)) {\n      firstIndexByPrefixSum(runningSum) = currentIndex\n    }\n  }\n\n  false\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-transpose-matrix",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::matrix"
+    ],
+    "question": "Signal : « Échanger lignes et colonnes d’une matrice » — quel réflexe ?",
+    "answer": {
+      "reflex": "Transposition : `result(columnIndex)(rowIndex) = matrix(rowIndex)(columnIndex)`.",
+      "template": "val result = Array.ofDim[Int](columnCount, rowCount)\nresult(columnIndex)(rowIndex) = matrix(rowIndex)(columnIndex)",
+      "example": {
+        "prompt": "Exercice : transposer une matrice rectangulaire.",
+        "code": "def transpose(matrix: Array[Array[Int]]): Array[Array[Int]] = {\n  val rowCount = matrix.length\n  val columnCount = matrix(0).length\n  val result = Array.ofDim[Int](columnCount, rowCount)\n\n  for (rowIndex <- 0 until rowCount; columnIndex <- 0 until columnCount) {\n    result(columnIndex)(rowIndex) = matrix(rowIndex)(columnIndex)\n  }\n\n  result\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-two-pointers-sorted",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::two-pointers",
+      "topic::sorting"
+    ],
+    "question": "Signal : « Chercher une paire dans un tableau trié » — quel réflexe ?",
+    "answer": {
+      "reflex": "Deux pointeurs : un à gauche, un à droite.",
+      "template": "var leftIndex = 0\nvar rightIndex = numbers.length - 1\n\nwhile (leftIndex < rightIndex) {\n  val currentSum = numbers(leftIndex) + numbers(rightIndex)\n  // avancer le pointeur qui rapproche de la target\n}",
+      "example": {
+        "prompt": "Exercice : tableau trié, déterminer si une paire somme à target.",
+        "code": "def hasPairWithTargetSum(sortedNumbers: Array[Int], target: Int): Boolean = {\n  var leftIndex = 0\n  var rightIndex = sortedNumbers.length - 1\n\n  while (leftIndex < rightIndex) {\n    val currentSum = sortedNumbers(leftIndex) + sortedNumbers(rightIndex)\n\n    if (currentSum == target) {\n      return true\n    } else if (currentSum < target) {\n      leftIndex += 1\n    } else {\n      rightIndex -= 1\n    }\n  }\n\n  false\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-two-sum",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::hashmap",
+      "topic::two-sum"
+    ],
+    "question": "Signal : « Deux nombres doivent produire une target » — quel réflexe ?",
+    "answer": {
+      "reflex": "HashMap des valeurs déjà vues + complément `target - currentNumber`.",
+      "template": "val requiredNumber = target - currentNumber\nif (indexBySeenNumber.contains(requiredNumber)) {\n  // paire trouvée\n}\nindexBySeenNumber(currentNumber) = currentIndex",
+      "example": {
+        "prompt": "Exercice : retourner les indices de deux nombres dont la somme vaut target.",
+        "code": "import scala.collection.mutable.HashMap\n\ndef twoSum(numbers: Array[Int], target: Int): Array[Int] = {\n  val indexBySeenNumber = HashMap.empty[Int, Int]\n\n  for (currentIndex <- numbers.indices) {\n    val currentNumber = numbers(currentIndex)\n    val requiredNumber = target - currentNumber\n\n    indexBySeenNumber.get(requiredNumber) match {\n      case Some(previousIndex) =>\n        return Array(previousIndex, currentIndex)\n      case None =>\n        indexBySeenNumber(currentNumber) = currentIndex\n    }\n  }\n\n  Array.empty[Int]\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-unique-number-xor",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::bitwise"
+    ],
+    "question": "Signal : « Tous les nombres apparaissent deux fois sauf un » — quel réflexe ?",
+    "answer": {
+      "reflex": "XOR de tous les nombres.",
+      "template": "var uniqueNumber = 0\nfor (number <- numbers) {\n  uniqueNumber ^= number\n}",
+      "example": {
+        "prompt": "Exercice : retrouver l’unique nombre non apparié en O(n) temps et O(1) mémoire.",
+        "code": "def singleNumber(numbers: Array[Int]): Int = {\n  var uniqueNumber = 0\n\n  for (number <- numbers) {\n    uniqueNumber ^= number\n    // Version conceptuelle : a ^ a = 0, puis 0 ^ remaining = remaining.\n  }\n\n  uniqueNumber\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-variable-sliding-window",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::sliding-window"
+    ],
+    "question": "Signal : « Plus longue fenêtre contiguë respectant une contrainte monotone » — quel réflexe ?",
+    "answer": {
+      "reflex": "Sliding window élastique : agrandir à droite ; tant que la fenêtre est invalide, réduire à gauche.",
+      "template": "var leftIndex = 0\n\nfor (rightIndex <- values.indices) {\n  // ajouter values(rightIndex)\n\n  while (windowIsInvalid) {\n    // enlever values(leftIndex)\n    leftIndex += 1\n  }\n\n  // évaluer [leftIndex, rightIndex]\n}",
+      "example": {
+        "prompt": "Exercice : avec des nombres positifs, plus longue sous-séquence contiguë dont la somme est strictement inférieure à target.",
+        "code": "def longestWindowUnderTarget(numbers: Array[Int], target: Int): Int = {\n  var leftIndex = 0\n  var currentWindowSum = 0\n  var bestWindowLength = 0\n\n  for (rightIndex <- numbers.indices) {\n    currentWindowSum += numbers(rightIndex)\n\n    while (leftIndex <= rightIndex && currentWindowSum >= target) {\n      currentWindowSum -= numbers(leftIndex)\n      leftIndex += 1\n    }\n\n    val currentWindowLength = rightIndex - leftIndex + 1\n    bestWindowLength = math.max(bestWindowLength, currentWindowLength)\n  }\n\n  bestWindowLength\n}"
+      },
+      "note": "Ce pattern exige une propriété monotone ; pour une somme, l’exemple suppose des valeurs positives ou nulles."
+    }
+  }
+]

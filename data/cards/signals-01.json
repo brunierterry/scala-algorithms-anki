@@ -1,0 +1,179 @@
+[
+  {
+    "id": "signal-anagram",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::hashmap",
+      "topic::string"
+    ],
+    "question": "Signal : « Deux chaînes contiennent-elles exactement les mêmes caractères ? » — quel réflexe ?",
+    "answer": {
+      "reflex": "HashMap de compteurs.",
+      "template": "val countByCharacter = HashMap.empty[Char, Int]\n// +1 pour la première chaîne, -1 pour la seconde ; tous les comptes doivent finir à 0.",
+      "example": {
+        "prompt": "Exercice : vérifier si deux Strings sont des anagrammes.",
+        "code": "import scala.collection.mutable.HashMap\n\ndef areAnagrams(firstText: String, secondText: String): Boolean = {\n  if (firstText.length != secondText.length) {\n    return false\n  }\n\n  val countByCharacter = HashMap.empty[Char, Int]\n\n  for (character <- firstText) {\n    countByCharacter(character) = countByCharacter.getOrElse(character, 0) + 1\n  }\n\n  for (character <- secondText) {\n    val updatedCount = countByCharacter.getOrElse(character, 0) - 1\n    if (updatedCount < 0) {\n      return false\n    }\n    countByCharacter(character) = updatedCount\n  }\n\n  true\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-associated-data",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::hashmap"
+    ],
+    "question": "Signal : « À quelle donnée est associée cette valeur ? » — quel réflexe ?",
+    "answer": {
+      "reflex": "HashMap.",
+      "template": "import scala.collection.mutable.HashMap\n\nval valueByKey = HashMap.empty[String, Int]\nvalueByKey(\"example\") = 42\nval value = valueByKey.getOrElse(\"example\", 0)",
+      "example": {
+        "prompt": "Exercice : mémoriser l’index où chaque nombre a été vu pour le retrouver en O(1) moyen.",
+        "code": "import scala.collection.mutable.HashMap\n\nval numbers = Array(5, 8, 13)\nval indexByNumber = HashMap.empty[Int, Int]\n\nfor (currentIndex <- numbers.indices) {\n  val currentNumber = numbers(currentIndex)\n  indexByNumber(currentNumber) = currentIndex\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-bfs-grid",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::bfs",
+      "topic::matrix",
+      "topic::queue"
+    ],
+    "question": "Signal : « Explorer une grille niveau par niveau / plus courte distance non pondérée » — quel réflexe ?",
+    "answer": {
+      "reflex": "BFS avec Queue + visited.",
+      "template": "val pendingCells = Queue.empty[(Int, Int)]\nval visited = HashSet.empty[(Int, Int)]\n\npendingCells.enqueue(startCell)\nvisited += startCell\n\nwhile (pendingCells.nonEmpty) {\n  val currentCell = pendingCells.dequeue()\n  // ajouter les voisins non visités\n}",
+      "example": {
+        "prompt": "Exercice : distance minimale dans une grille 0/1 où 0 est libre et 1 est bloqué.",
+        "code": "import scala.collection.mutable.HashSet\nimport scala.collection.mutable.Queue\n\ndef shortestDistance(grid: Array[Array[Int]], startRow: Int, startColumn: Int, targetRow: Int, targetColumn: Int): Int = {\n  val rowCount = grid.length\n  val columnCount = grid(0).length\n  val directions = Array((-1, 0), (1, 0), (0, -1), (0, 1))\n\n  val pending = Queue((startRow, startColumn, 0))\n  val visited = HashSet((startRow, startColumn))\n\n  while (pending.nonEmpty) {\n    val (currentRow, currentColumn, currentDistance) = pending.dequeue()\n\n    if (currentRow == targetRow && currentColumn == targetColumn) {\n      return currentDistance\n    }\n\n    for ((rowChange, columnChange) <- directions) {\n      val neighbourRow = currentRow + rowChange\n      val neighbourColumn = currentColumn + columnChange\n      val neighbour = (neighbourRow, neighbourColumn)\n\n      val isInside = neighbourRow >= 0 && neighbourRow < rowCount && neighbourColumn >= 0 && neighbourColumn < columnCount\n      if (isInside && grid(neighbourRow)(neighbourColumn) == 0 && !visited.contains(neighbour)) {\n        visited += neighbour\n        pending.enqueue((neighbourRow, neighbourColumn, currentDistance + 1))\n      }\n    }\n  }\n\n  -1\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-binary-search",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::binary-search",
+      "topic::sorting"
+    ],
+    "question": "Signal : « Chercher dans des données triées en O(log n) » — quel réflexe ?",
+    "answer": {
+      "reflex": "Binary search.",
+      "template": "var leftIndex = 0\nvar rightIndex = sortedNumbers.length - 1\n\nwhile (leftIndex <= rightIndex) {\n  val middleIndex = leftIndex + (rightIndex - leftIndex) / 2\n  // réduire la moitié impossible\n}",
+      "example": {
+        "prompt": "Exercice : retourner l’index de target dans un Array trié, sinon -1.",
+        "code": "def binarySearch(sortedNumbers: Array[Int], target: Int): Int = {\n  var leftIndex = 0\n  var rightIndex = sortedNumbers.length - 1\n\n  while (leftIndex <= rightIndex) {\n    val middleIndex = leftIndex + (rightIndex - leftIndex) / 2\n    val middleNumber = sortedNumbers(middleIndex)\n\n    if (middleNumber == target) {\n      return middleIndex\n    } else if (middleNumber < target) {\n      leftIndex = middleIndex + 1\n    } else {\n      rightIndex = middleIndex - 1\n    }\n  }\n\n  -1\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-bit-flags",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::bitwise"
+    ],
+    "question": "Signal : « Un entier représente plusieurs flags booléens » — quel réflexe ?",
+    "answer": {
+      "reflex": "Bit masks : `1 << bitIndex`, puis AND/OR/XOR selon test/set/toggle.",
+      "template": "val bitMask = 1 << bitIndex\nval isEnabled = (flags & bitMask) != 0\nval enabledFlags = flags | bitMask\nval toggledFlags = flags ^ bitMask",
+      "example": {
+        "prompt": "Exercice : activer le flag 2, désactiver le flag 1, toggler le flag 0, puis vérifier le flag 2.",
+        "code": "def updateFlags(initialFlags: Int): Boolean = {\n  val featureBitIndex = 2\n  val legacyBitIndex = 1\n  val debugBitIndex = 0\n\n  var flags = initialFlags\n  flags = flags | (1 << featureBitIndex)\n  flags = flags & ~(1 << legacyBitIndex)\n  flags = flags ^ (1 << debugBitIndex)\n\n  (flags & (1 << featureBitIndex)) != 0\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-count-occurrences",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::hashmap"
+    ],
+    "question": "Signal : « Combien de fois chaque valeur apparaît ? » — quel réflexe ?",
+    "answer": {
+      "reflex": "HashMap[value -> count].",
+      "template": "import scala.collection.mutable.HashMap\n\nval countByValue = HashMap.empty[Int, Int]\ncountByValue(currentValue) = countByValue.getOrElse(currentValue, 0) + 1",
+      "example": {
+        "prompt": "Exercice : retourner le caractère le plus fréquent d’une String ASCII.",
+        "code": "import scala.collection.mutable.HashMap\n\ndef mostFrequentCharacter(text: String): Char = {\n  val countByCharacter = HashMap.empty[Char, Int]\n\n  for (character <- text) {\n    countByCharacter(character) = countByCharacter.getOrElse(character, 0) + 1\n  }\n\n  countByCharacter.maxBy(entry => entry._2)._1\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-count-set-bits",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::bitwise"
+    ],
+    "question": "Signal : « Compter les bits à 1 » — quel réflexe ?",
+    "answer": {
+      "reflex": "Supprimer le bit à 1 le plus à droite jusqu’à zéro.",
+      "template": "while (remainingNumber != 0) {\n  remainingNumber &= (remainingNumber - 1)\n  bitCount += 1\n}",
+      "example": {
+        "prompt": "Exercice : nombre de bits à 1 dans un entier positif.",
+        "code": "def countSetBits(number: Int): Int = {\n  var remainingNumber = number\n  var bitCount = 0\n\n  while (remainingNumber != 0) {\n    remainingNumber &= (remainingNumber - 1)\n    // Version plus lisible mais souvent plus longue : tester chaque bit avec un masque.\n    bitCount += 1\n  }\n\n  bitCount\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-detect-cycle",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::hashset",
+      "topic::cycle"
+    ],
+    "question": "Signal : « Le processus peut revenir à un état déjà vu » — quel réflexe ?",
+    "answer": {
+      "reflex": "HashSet pour détecter le cycle.",
+      "template": "import scala.collection.mutable.HashSet\n\nval seenStates = HashSet.empty[Int]\n\nwhile (!seenStates.contains(currentState)) {\n  seenStates += currentState\n  currentState = computeNextState(currentState)\n}",
+      "example": {
+        "prompt": "Exercice : Happy Number — répéter la somme des carrés des chiffres ; true si on atteint 1, false si un état se répète.",
+        "code": "import scala.collection.mutable.HashSet\n\ndef isHappy(number: Int): Boolean = {\n  var currentNumber = number\n  val seenNumbers = HashSet.empty[Int]\n\n  while (currentNumber != 1 && !seenNumbers.contains(currentNumber)) {\n    seenNumbers += currentNumber\n\n    var remainingNumber = currentNumber\n    var nextNumber = 0\n\n    while (remainingNumber > 0) {\n      val lastDigit = remainingNumber % 10\n      nextNumber += lastDigit * lastDigit\n      remainingNumber /= 10\n    }\n\n    currentNumber = nextNumber\n  }\n\n  currentNumber == 1\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-dfs-grid",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::dfs",
+      "topic::matrix",
+      "topic::hashset"
+    ],
+    "question": "Signal : « Explorer complètement une région connectée » — quel réflexe ?",
+    "answer": {
+      "reflex": "DFS avec recursion simple + visited.",
+      "template": "def visit(currentRow: Int, currentColumn: Int): Unit = {\n  // bounds / déjà visité / case invalide -> return\n  // marquer visité\n  // visiter les 4 voisins\n}",
+      "example": {
+        "prompt": "Exercice : compter le nombre d’îles de 1 dans une matrice de 0/1.",
+        "code": "import scala.collection.mutable.HashSet\n\ndef countIslands(grid: Array[Array[Int]]): Int = {\n  val rowCount = grid.length\n  val columnCount = grid(0).length\n  val visited = HashSet.empty[(Int, Int)]\n  val directions = Array((-1, 0), (1, 0), (0, -1), (0, 1))\n\n  def visitRegion(currentRow: Int, currentColumn: Int): Unit = {\n    val isInside = currentRow >= 0 && currentRow < rowCount && currentColumn >= 0 && currentColumn < columnCount\n    if (!isInside || grid(currentRow)(currentColumn) == 0 || visited.contains((currentRow, currentColumn))) {\n      return\n    }\n\n    visited += ((currentRow, currentColumn))\n\n    for ((rowChange, columnChange) <- directions) {\n      visitRegion(currentRow + rowChange, currentColumn + columnChange)\n    }\n  }\n\n  var islandCount = 0\n  for (rowIndex <- 0 until rowCount; columnIndex <- 0 until columnCount) {\n    if (grid(rowIndex)(columnIndex) == 1 && !visited.contains((rowIndex, columnIndex))) {\n      islandCount += 1\n      visitRegion(rowIndex, columnIndex)\n    }\n  }\n\n  islandCount\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-fixed-sliding-window",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::sliding-window"
+    ],
+    "question": "Signal : « Calculer quelque chose sur chaque bloc de K éléments consécutifs » — quel réflexe ?",
+    "answer": {
+      "reflex": "Sliding window de taille fixe.",
+      "template": "var currentWindowValue = 0\n// construire la première fenêtre\n// puis : ajouter l’élément entrant, enlever l’élément sortant",
+      "example": {
+        "prompt": "Exercice : somme maximale de 3 éléments consécutifs.",
+        "code": "def maximumFixedWindowSum(numbers: Array[Int], windowSize: Int): Int = {\n  var currentWindowSum = 0\n\n  for (currentIndex <- 0 until windowSize) {\n    currentWindowSum += numbers(currentIndex)\n  }\n\n  var maximumWindowSum = currentWindowSum\n\n  for (rightIndex <- windowSize until numbers.length) {\n    val enteringNumber = numbers(rightIndex)\n    val leavingNumber = numbers(rightIndex - windowSize)\n\n    currentWindowSum += enteringNumber\n    currentWindowSum -= leavingNumber\n    maximumWindowSum = math.max(maximumWindowSum, currentWindowSum)\n  }\n\n  maximumWindowSum\n}"
+      }
+    }
+  }
+]

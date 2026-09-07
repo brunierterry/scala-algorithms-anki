@@ -1,0 +1,179 @@
+[
+  {
+    "id": "signal-iterate-digits",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::digits"
+    ],
+    "question": "Signal : « Traiter chaque chiffre d’un entier sans String » — quel réflexe ?",
+    "answer": {
+      "reflex": "`% 10` pour lire le dernier chiffre, `/= 10` pour le retirer.",
+      "template": "var remainingNumber = number\nwhile (remainingNumber > 0) {\n  val lastDigit = remainingNumber % 10\n  // utiliser lastDigit\n  remainingNumber /= 10\n}",
+      "example": {
+        "prompt": "Exercice : somme des carrés des chiffres.",
+        "code": "def sumOfSquaredDigits(number: Int): Int = {\n  var remainingNumber = number\n  var result = 0\n\n  while (remainingNumber > 0) {\n    val lastDigit = remainingNumber % 10\n    result += lastDigit * lastDigit\n    remainingNumber /= 10\n  }\n\n  result\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-longest-unique-substring",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::sliding-window",
+      "topic::hashset"
+    ],
+    "question": "Signal : « Plus longue sous-chaîne sans répétition » — quel réflexe ?",
+    "answer": {
+      "reflex": "Sliding window + HashSet des caractères présents dans la fenêtre.",
+      "template": "while (seenCharacters.contains(currentCharacter)) {\n  seenCharacters -= text(leftIndex)\n  leftIndex += 1\n}\nseenCharacters += currentCharacter",
+      "example": {
+        "prompt": "Exercice : longueur de la plus longue sous-chaîne sans caractère répété.",
+        "code": "import scala.collection.mutable.HashSet\n\ndef longestUniqueSubstringLength(text: String): Int = {\n  val charactersInWindow = HashSet.empty[Char]\n  var leftIndex = 0\n  var bestLength = 0\n\n  for (rightIndex <- text.indices) {\n    val currentCharacter = text(rightIndex)\n\n    while (charactersInWindow.contains(currentCharacter)) {\n      charactersInWindow -= text(leftIndex)\n      leftIndex += 1\n    }\n\n    charactersInWindow += currentCharacter\n    val currentLength = rightIndex - leftIndex + 1\n    bestLength = math.max(bestLength, currentLength)\n  }\n\n  bestLength\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-lowest-set-bit",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::bitwise"
+    ],
+    "question": "Signal : « Retrouver le flag actif de poids le plus faible » — quel réflexe ?",
+    "answer": {
+      "reflex": "Isoler le bit à 1 le plus à droite avec `number & -number`.",
+      "template": "val lowestActiveBit = flags & -flags",
+      "example": {
+        "prompt": "Exercice : un Int encode des flags ; retourner la valeur du flag actif le plus faible.",
+        "code": "def lowestActiveFlag(flags: Int): Int = {\n  flags & -flags\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-matrix-neighbours",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::matrix",
+      "topic::directions"
+    ],
+    "question": "Signal : « Parcourir les voisins haut/bas/gauche/droite d’une case » — quel réflexe ?",
+    "answer": {
+      "reflex": "Array de directions `(rowChange, columnChange)` + contrôle des bounds.",
+      "template": "val neighbourDirections = Array(\n  (-1, 0),\n  (1, 0),\n  (0, -1),\n  (0, 1)\n)",
+      "example": {
+        "prompt": "Exercice : compter combien de voisins orthogonaux d’une cellule contiennent 1.",
+        "code": "def countNeighbourOnes(matrix: Array[Array[Int]], currentRow: Int, currentColumn: Int): Int = {\n  val rowCount = matrix.length\n  val columnCount = matrix(0).length\n  val neighbourDirections = Array((-1, 0), (1, 0), (0, -1), (0, 1))\n  var neighbourOneCount = 0\n\n  for ((rowChange, columnChange) <- neighbourDirections) {\n    val neighbourRow = currentRow + rowChange\n    val neighbourColumn = currentColumn + columnChange\n\n    val isInsideMatrix =\n      neighbourRow >= 0 && neighbourRow < rowCount &&\n      neighbourColumn >= 0 && neighbourColumn < columnCount\n\n    if (isInsideMatrix && matrix(neighbourRow)(neighbourColumn) == 1) {\n      neighbourOneCount += 1\n    }\n  }\n\n  neighbourOneCount\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-merge-intervals",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::sorting",
+      "topic::intervals"
+    ],
+    "question": "Signal : « Intervalles qui peuvent se chevaucher » — quel réflexe ?",
+    "answer": {
+      "reflex": "Trier par début puis fusionner en un scan.",
+      "template": "val sortedIntervals = intervals.sortBy(interval => interval._1)\n// si nextStart <= currentEnd : étendre currentEnd",
+      "example": {
+        "prompt": "Exercice : fusionner des intervalles [start, end] qui se chevauchent.",
+        "code": "import scala.collection.mutable.ArrayBuffer\n\ndef mergeIntervals(intervals: Array[(Int, Int)]): Array[(Int, Int)] = {\n  if (intervals.isEmpty) {\n    return Array.empty[(Int, Int)]\n  }\n\n  val sortedIntervals = intervals.sortBy(interval => interval._1)\n  val merged = ArrayBuffer.empty[(Int, Int)]\n\n  var currentStart = sortedIntervals(0)._1\n  var currentEnd = sortedIntervals(0)._2\n\n  for (currentIndex <- 1 until sortedIntervals.length) {\n    val (nextStart, nextEnd) = sortedIntervals(currentIndex)\n\n    if (nextStart <= currentEnd) {\n      currentEnd = math.max(currentEnd, nextEnd)\n    } else {\n      merged += ((currentStart, currentEnd))\n      currentStart = nextStart\n      currentEnd = nextEnd\n    }\n  }\n\n  merged += ((currentStart, currentEnd))\n  merged.toArray\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-numeric-string-digits",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::char",
+      "topic::digits",
+      "topic::string"
+    ],
+    "question": "Signal : « Faire de l’arithmétique sur les chiffres contenus dans une String » — quel réflexe ?",
+    "answer": {
+      "reflex": "Convertir chaque Char numérique avec `asDigit` avant le calcul.",
+      "template": "for (character <- text) {\n  val digit = character.asDigit\n  // calcul avec digit\n}",
+      "example": {
+        "prompt": "Exercice : calculer la somme des carrés des chiffres de la String \"190\".",
+        "code": "def sumSquaredDigits(text: String): Int = {\n  var total = 0\n\n  for (character <- text) {\n    val digit = character.asDigit\n    total += digit * digit\n  }\n\n  total\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-palindrome",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::two-pointers",
+      "topic::string"
+    ],
+    "question": "Signal : « Comparer les extrémités d’une séquence » — quel réflexe ?",
+    "answer": {
+      "reflex": "Deux pointeurs qui convergent.",
+      "template": "var leftIndex = 0\nvar rightIndex = text.length - 1\nwhile (leftIndex < rightIndex) {\n  // comparer text(leftIndex) et text(rightIndex)\n  leftIndex += 1\n  rightIndex -= 1\n}",
+      "example": {
+        "prompt": "Exercice : vérifier si une String est un palindrome.",
+        "code": "def isPalindrome(text: String): Boolean = {\n  var leftIndex = 0\n  var rightIndex = text.length - 1\n\n  while (leftIndex < rightIndex) {\n    if (text(leftIndex) != text(rightIndex)) {\n      return false\n    }\n    leftIndex += 1\n    rightIndex -= 1\n  }\n\n  true\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-parity-partition",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::two-pointers",
+      "topic::parity"
+    ],
+    "question": "Signal : « Séparer pairs et impairs sans préserver l’ordre » — quel réflexe ?",
+    "answer": {
+      "reflex": "Deux pointeurs + test de parité.",
+      "template": "var leftIndex = 0\nvar rightIndex = numbers.length - 1\n// avancer gauche si pair ; droite si impair ; sinon swap",
+      "example": {
+        "prompt": "Exercice : placer les nombres pairs avant les impairs, in-place.",
+        "code": "def partitionByParity(numbers: Array[Int]): Unit = {\n  var leftIndex = 0\n  var rightIndex = numbers.length - 1\n\n  while (leftIndex < rightIndex) {\n    if ((numbers(leftIndex) & 1) == 0) {\n      leftIndex += 1\n    } else if ((numbers(rightIndex) & 1) != 0) {\n      rightIndex -= 1\n    } else {\n      val temporaryValue = numbers(leftIndex)\n      numbers(leftIndex) = numbers(rightIndex)\n      numbers(rightIndex) = temporaryValue\n      leftIndex += 1\n      rightIndex -= 1\n    }\n  }\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-power-of-two",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::bitwise"
+    ],
+    "question": "Signal : « Tester beaucoup de valeurs pour savoir lesquelles sont des puissances de 2 » — quel réflexe ?",
+    "answer": {
+      "reflex": "Test bitwise : `number > 0 && (number & (number - 1)) == 0`.",
+      "template": "val isPowerOfTwo = number > 0 && (number & (number - 1)) == 0",
+      "example": {
+        "prompt": "Exercice : compter les puissances de 2 dans un Array.",
+        "code": "def countPowersOfTwo(numbers: Array[Int]): Int = {\n  var count = 0\n\n  for (number <- numbers) {\n    val isPowerOfTwo = number > 0 && (number & (number - 1)) == 0\n    if (isPowerOfTwo) {\n      count += 1\n    }\n  }\n\n  count\n}"
+      }
+    }
+  },
+  {
+    "id": "signal-prefix-sum",
+    "type": "signal",
+    "tags": [
+      "type::signal",
+      "topic::prefix-sum"
+    ],
+    "question": "Signal : « Beaucoup de sommes entre deux indices » — quel réflexe ?",
+    "answer": {
+      "reflex": "Prefix sums.",
+      "template": "val prefixSums = Array.ofDim[Long](numbers.length + 1)\nfor (currentIndex <- numbers.indices) {\n  prefixSums(currentIndex + 1) = prefixSums(currentIndex) + numbers(currentIndex)\n}\n\nval rangeSum = prefixSums(endIndexInclusive + 1) - prefixSums(startIndex)",
+      "example": {
+        "prompt": "Exercice : répondre en O(1) à plusieurs requêtes de somme [startIndex, endIndexInclusive].",
+        "code": "def buildPrefixSums(numbers: Array[Int]): Array[Long] = {\n  val prefixSums = Array.ofDim[Long](numbers.length + 1)\n\n  for (currentIndex <- numbers.indices) {\n    prefixSums(currentIndex + 1) = prefixSums(currentIndex) + numbers(currentIndex)\n  }\n\n  prefixSums\n}\n\ndef rangeSum(prefixSums: Array[Long], startIndex: Int, endIndexInclusive: Int): Long = {\n  prefixSums(endIndexInclusive + 1) - prefixSums(startIndex)\n}"
+      }
+    }
+  }
+]

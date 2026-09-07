@@ -1,0 +1,78 @@
+[
+  {
+    "id": "thinking-bruteforce-first",
+    "type": "thinking",
+    "tags": [
+      "type::thinking",
+      "topic::problem-solving"
+    ],
+    "question": "Bloqué sur un problème : quel premier réflexe intellectuel ?",
+    "answer": {
+      "reflex": "Écrire mentalement la solution brute-force, puis identifier ce qui est répété et peut être mémorisé/pré-calculé.",
+      "example": {
+        "prompt": "Exemple : Two Sum brute-force compare toutes les paires O(n²) ; mémoriser les valeurs vues dans HashMap permet O(n)."
+      }
+    }
+  },
+  {
+    "id": "thinking-edge-cases",
+    "type": "thinking",
+    "tags": [
+      "type::thinking",
+      "topic::testing"
+    ],
+    "question": "Quels edge cases vérifier systématiquement avant de soumettre ?",
+    "answer": {
+      "reflex": "Vide, taille 1, doublons, zéros, négatifs, premier/dernier index, overflow.",
+      "bullets": [
+        "Vérifier aussi la convention de borne droite : inclusive ou exclusive.",
+        "Pour matrices : 1x1, une seule ligne, une seule colonne."
+      ]
+    }
+  },
+  {
+    "id": "thinking-invariant",
+    "type": "thinking",
+    "tags": [
+      "type::thinking",
+      "topic::problem-solving"
+    ],
+    "question": "Quel outil mental aide à raisonner sur two pointers / sliding window ?",
+    "answer": {
+      "reflex": "Formuler l’invariant : ce qui doit rester vrai après chaque itération.",
+      "example": {
+        "prompt": "Sliding window : après le `while`, la fenêtre [leftIndex, rightIndex] respecte la contrainte."
+      }
+    }
+  },
+  {
+    "id": "thinking-partial-credit",
+    "type": "thinking",
+    "tags": [
+      "type::thinking",
+      "topic::strategy"
+    ],
+    "question": "Sous chrono, que faire si l’optimisation parfaite ne vient pas ?",
+    "answer": {
+      "reflex": "Soumettre une version correcte simple si elle passe une partie des contraintes, puis optimiser.",
+      "note": "Une solution testée partiellement vaut mieux que du code non soumis."
+    }
+  },
+  {
+    "id": "thinking-read-constraints",
+    "type": "thinking",
+    "tags": [
+      "type::thinking",
+      "topic::complexity"
+    ],
+    "question": "Avant de coder, quel signal donne directement la complexité acceptable ?",
+    "answer": {
+      "reflex": "Lire la taille maximale de l’input.",
+      "bullets": [
+        "n autour de 10^5 : viser O(n) ou O(n log n).",
+        "n autour de 10^3 : O(n²) peut être acceptable.",
+        "Ne pas optimiser sans regarder les contraintes."
+      ]
+    }
+  }
+]

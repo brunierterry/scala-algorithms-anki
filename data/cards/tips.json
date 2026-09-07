@@ -1,0 +1,214 @@
+[
+  {
+    "id": "tip-char-to-digit-readable",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::char",
+      "topic::digits"
+    ],
+    "question": "Comment transformer un caractère numérique en chiffre, de façon lisible ?",
+    "answer": {
+      "reflex": "Utiliser `asDigit`.",
+      "code": "val character = '9'\nval digit = character.asDigit // 9\n\n// Variante arithmétique :\nval sameDigit = character - '0' // 9"
+    }
+  },
+  {
+    "id": "tip-clear-bit",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::bitwise"
+    ],
+    "question": "Comment désactiver un bit précis ?",
+    "answer": {
+      "reflex": "AND avec l’inverse du masque.",
+      "code": "val number = 42\nval bitIndex = 3\nval result = number & ~(1 << bitIndex)"
+    }
+  },
+  {
+    "id": "tip-clear-lowest-set-bit",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::bitwise"
+    ],
+    "question": "Comment supprimer le bit à 1 le plus à droite ?",
+    "answer": {
+      "reflex": "`number & (number - 1)`.",
+      "code": "val number = 12 // 1100\nval result = number & (number - 1) // 8 = 1000"
+    }
+  },
+  {
+    "id": "tip-is-even",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::bitwise",
+      "topic::parity"
+    ],
+    "question": "Comment tester si un Int est pair ?",
+    "answer": {
+      "reflex": "Lisible : `number % 2 == 0`. Version bitwise : `(number & 1) == 0`.",
+      "code": "val number = 14\nval isEvenReadable = number % 2 == 0\nval isEvenBitwise = (number & 1) == 0"
+    }
+  },
+  {
+    "id": "tip-is-odd",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::bitwise",
+      "topic::parity"
+    ],
+    "question": "Comment tester si un Int est impair ?",
+    "answer": {
+      "reflex": "Lisible : `number % 2 != 0`. Version bitwise : `(number & 1) != 0`.",
+      "code": "val number = 13\nval isOddReadable = number % 2 != 0\nval isOddBitwise = (number & 1) != 0"
+    }
+  },
+  {
+    "id": "tip-isolate-lowest-set-bit",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::bitwise"
+    ],
+    "question": "Comment isoler uniquement le bit à 1 le plus à droite ?",
+    "answer": {
+      "reflex": "`number & -number`.",
+      "code": "val number = 12 // 1100\nval result = number & -number // 4 = 0100"
+    }
+  },
+  {
+    "id": "tip-last-digit",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::digits"
+    ],
+    "question": "Comment récupérer le dernier chiffre d’un entier positif sans String ?",
+    "answer": {
+      "reflex": "`number % 10`.",
+      "code": "val number = 198\nval lastDigit = number % 10 // 8"
+    }
+  },
+  {
+    "id": "tip-power-of-two",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::bitwise"
+    ],
+    "question": "Comment tester rapidement si un entier positif est une puissance de 2 ?",
+    "answer": {
+      "reflex": "Un seul bit à 1 : `number > 0 && (number & (number - 1)) == 0`.",
+      "code": "val number = 16\nval isPowerOfTwo = number > 0 && (number & (number - 1)) == 0"
+    }
+  },
+  {
+    "id": "tip-range-until-to",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::ranges"
+    ],
+    "question": "Quelle différence entre `until` et `to` pour les ranges ?",
+    "answer": {
+      "reflex": "`until` exclut la borne de fin ; `to` l’inclut.",
+      "code": "0 until 3 // 0, 1, 2\n0 to 3    // 0, 1, 2, 3"
+    }
+  },
+  {
+    "id": "tip-remove-last-digit",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::digits"
+    ],
+    "question": "Comment enlever le dernier chiffre d’un entier positif sans String ?",
+    "answer": {
+      "reflex": "Division entière par 10.",
+      "code": "var remainingNumber = 198\nremainingNumber /= 10 // 19"
+    }
+  },
+  {
+    "id": "tip-safe-midpoint",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::binary-search"
+    ],
+    "question": "Comment calculer le milieu entre deux indices sans risque d’overflow ?",
+    "answer": {
+      "reflex": "`leftIndex + (rightIndex - leftIndex) / 2`.",
+      "code": "val middleIndex = leftIndex + (rightIndex - leftIndex) / 2"
+    }
+  },
+  {
+    "id": "tip-set-bit",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::bitwise"
+    ],
+    "question": "Comment activer un bit précis ?",
+    "answer": {
+      "reflex": "OR avec `1 << bitIndex`.",
+      "code": "val number = 34\nval bitIndex = 3\nval result = number | (1 << bitIndex)"
+    }
+  },
+  {
+    "id": "tip-swap-array-values",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::array"
+    ],
+    "question": "Comment échanger deux valeurs d’un Array de façon explicite ?",
+    "answer": {
+      "reflex": "Utiliser une variable temporaire.",
+      "code": "val numbers = Array(10, 20)\nval firstIndex = 0\nval secondIndex = 1\n\nval temporaryValue = numbers(firstIndex)\nnumbers(firstIndex) = numbers(secondIndex)\nnumbers(secondIndex) = temporaryValue"
+    }
+  },
+  {
+    "id": "tip-test-bit",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::bitwise"
+    ],
+    "question": "Comment tester si un bit précis est activé ?",
+    "answer": {
+      "reflex": "Construire un masque `1 << bitIndex`, puis AND.",
+      "code": "val number = 42\nval bitIndex = 3\nval isBitSet = (number & (1 << bitIndex)) != 0"
+    }
+  },
+  {
+    "id": "tip-toggle-bit",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::bitwise"
+    ],
+    "question": "Comment inverser un bit précis ?",
+    "answer": {
+      "reflex": "XOR avec `1 << bitIndex`.",
+      "code": "val number = 42\nval bitIndex = 3\nval result = number ^ (1 << bitIndex)"
+    }
+  },
+  {
+    "id": "tip-use-long-for-sums",
+    "type": "tip",
+    "tags": [
+      "type::tip",
+      "topic::complexity",
+      "topic::numbers"
+    ],
+    "question": "Quel réflexe éviter les overflows sur de grosses sommes d’Int ?",
+    "answer": {
+      "reflex": "Accumuler dans un `Long`.",
+      "code": "val numbers = Array(Int.MaxValue, Int.MaxValue)\nvar total: Long = 0L\nfor (number <- numbers) {\n  total += number\n}"
+    }
+  }
+]
