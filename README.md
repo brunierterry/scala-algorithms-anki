@@ -6,7 +6,7 @@ Le repository garde la **source canonique en JSON lisible et diffable**. Le fich
 
 ## Contenu actuel
 
-**146 cartes** dans un seul deck, avec tags hiérarchiques.
+**162 cartes** dans un seul deck, avec tags hiérarchiques.
 
 Types de cartes :
 
@@ -18,6 +18,8 @@ Types de cartes :
 - `type::difference` — différence entre deux concepts et impact de complexité
 - `type::error` — petites cartes « corrige l’erreur »
 - `type::thinking` — réflexes de résolution et de gestion du chrono
+
+La couverture inclut aussi les patterns fondamentaux d’arbres binaires / BST : DFS récursif, in-order, profondeur, path sum, BFS par niveau, recherche BST, validation par bornes, Lowest Common Ancestor et vérification d’équilibre.
 
 Le choix éditorial est volontaire : lorsqu’un réflexe générique suffit, le deck évite de proposer plusieurs solutions concurrentes. Exemple : pour compter des occurrences, le réflexe standard est **HashMap**, pas « HashMap ou frequency array selon… ».
 
@@ -97,7 +99,7 @@ dist/scala-algorithms-anki.apkg
 Un build réussi affiche par exemple :
 
 ```text
-Built 146 cards -> .../dist/scala-algorithms-anki.apkg
+Built 162 cards -> .../dist/scala-algorithms-anki.apkg
 ```
 
 Le build sert aussi de validation. Il n’y a volontairement pas un second script à retenir :
@@ -178,6 +180,7 @@ Cela permet de garder :
 - Variables explicites : `currentIndex`, `leftIndex`, `currentNumber`, `neighbourRow`…
 - Style impératif privilégié pour rendre la mécanique algorithmique visible.
 - `Array`, `mutable.HashSet`, `mutable.HashMap` comme structures de base quand elles suffisent.
+- Pour les arbres, préférer la récursion DFS comme réflexe général ; utiliser une `mutable.Queue` quand l’énoncé demande explicitement un traitement par niveau.
 - Pour les cartes de « signal », privilégier **un réflexe principal unique**, générique et facile à remobiliser.
 - Les variantes plus compactes / bitwise peuvent apparaître dans les cartes de tips ; les patterns complets restent lisibles et commentés.
 
