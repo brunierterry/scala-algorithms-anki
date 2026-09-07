@@ -1,0 +1,169 @@
+[
+  {
+    "id": "operator-bitwise-and",
+    "type": "operator",
+    "tags": [
+      "type::operator",
+      "topic::bitwise",
+      "topic::operator"
+    ],
+    "question": "Que fait `&` entre deux Int ?",
+    "answer": {
+      "reflex": "AND bit à bit : un bit vaut 1 seulement si les deux bits valent 1.",
+      "code": "val firstNumber = 12 // 1100\nval secondNumber = 10 // 1010\nval result = firstNumber & secondNumber // 8 = 1000"
+    }
+  },
+  {
+    "id": "operator-bitwise-not",
+    "type": "operator",
+    "tags": [
+      "type::operator",
+      "topic::bitwise",
+      "topic::operator"
+    ],
+    "question": "Que fait `~` sur un Int ?",
+    "answer": {
+      "reflex": "Inverse tous les bits.",
+      "code": "val bitMask = 1 << 3\nval inverseMask = ~bitMask"
+    }
+  },
+  {
+    "id": "operator-bitwise-or",
+    "type": "operator",
+    "tags": [
+      "type::operator",
+      "topic::bitwise",
+      "topic::operator"
+    ],
+    "question": "Que fait `|` entre deux Int ?",
+    "answer": {
+      "reflex": "OR bit à bit : un bit vaut 1 si au moins un des deux bits vaut 1.",
+      "code": "val firstNumber = 8 // 1000\nval secondNumber = 2 // 0010\nval result = firstNumber | secondNumber // 10 = 1010"
+    }
+  },
+  {
+    "id": "operator-bitwise-xor",
+    "type": "operator",
+    "tags": [
+      "type::operator",
+      "topic::bitwise",
+      "topic::operator"
+    ],
+    "question": "Que fait `^` entre deux Int ?",
+    "answer": {
+      "reflex": "XOR bit à bit : 1 si les bits sont différents.",
+      "code": "val number = 7\nval cancelled = number ^ number // 0"
+    }
+  },
+  {
+    "id": "operator-collection-minus-equals",
+    "type": "operator",
+    "tags": [
+      "type::operator",
+      "topic::operator",
+      "topic::hashset"
+    ],
+    "question": "Que fait `-=` sur mutable.HashSet ?",
+    "answer": {
+      "reflex": "Retire une valeur du Set.",
+      "code": "import scala.collection.mutable.HashSet\nval values = HashSet(10, 20)\nvalues -= 10"
+    }
+  },
+  {
+    "id": "operator-collection-plus-equals",
+    "type": "operator",
+    "tags": [
+      "type::operator",
+      "topic::operator",
+      "topic::hashset"
+    ],
+    "question": "Que fait `+=` sur mutable.HashSet ?",
+    "answer": {
+      "reflex": "Ajoute une valeur au Set.",
+      "code": "import scala.collection.mutable.HashSet\nval values = HashSet.empty[Int]\nvalues += 42"
+    }
+  },
+  {
+    "id": "operator-integer-division",
+    "type": "operator",
+    "tags": [
+      "type::operator",
+      "topic::operator",
+      "topic::digits"
+    ],
+    "question": "Que fait `/` entre deux Int ?",
+    "answer": {
+      "reflex": "Division entière : la partie décimale est tronquée.",
+      "code": "val number = 198\nval withoutLastDigit = number / 10 // 19"
+    }
+  },
+  {
+    "id": "operator-left-shift",
+    "type": "operator",
+    "tags": [
+      "type::operator",
+      "topic::bitwise",
+      "topic::operator"
+    ],
+    "question": "Que fait `number << bitCount` ?",
+    "answer": {
+      "reflex": "Décale les bits vers la gauche ; pour un positif sans overflow, multiplie par 2^bitCount.",
+      "code": "val value = 1\nval shifted = value << 3 // 8"
+    }
+  },
+  {
+    "id": "operator-modulo",
+    "type": "operator",
+    "tags": [
+      "type::operator",
+      "topic::operator",
+      "topic::digits"
+    ],
+    "question": "Que fait l’opérateur `%` sur des Int ?",
+    "answer": {
+      "reflex": "Il retourne le reste de la division entière.",
+      "code": "val number = 198\nval lastDigit = number % 10 // 8"
+    }
+  },
+  {
+    "id": "operator-plus-equals",
+    "type": "operator",
+    "tags": [
+      "type::operator",
+      "topic::operator"
+    ],
+    "question": "Que signifie `+=` sur une variable numérique mutable ?",
+    "answer": {
+      "reflex": "`value += amount` équivaut à `value = value + amount`.",
+      "code": "var total = 10\ntotal += 4 // 14"
+    }
+  },
+  {
+    "id": "operator-right-shift",
+    "type": "operator",
+    "tags": [
+      "type::operator",
+      "topic::bitwise",
+      "topic::operator"
+    ],
+    "question": "Que fait `number >> bitCount` ?",
+    "answer": {
+      "reflex": "Décale les bits vers la droite en conservant le signe.",
+      "code": "val value = 16\nval shifted = value >> 2 // 4"
+    }
+  },
+  {
+    "id": "operator-unsigned-right-shift",
+    "type": "operator",
+    "tags": [
+      "type::operator",
+      "topic::bitwise",
+      "topic::operator"
+    ],
+    "question": "Que fait `number >>> bitCount` ?",
+    "answer": {
+      "reflex": "Décale à droite en injectant des zéros à gauche, même pour un nombre négatif.",
+      "code": "val value = -1\nval shifted = value >>> 1"
+    }
+  }
+]

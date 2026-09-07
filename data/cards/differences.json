@@ -1,0 +1,150 @@
+[
+  {
+    "id": "difference-array-contains-hashset",
+    "type": "difference",
+    "tags": [
+      "type::difference",
+      "topic::array",
+      "topic::hashset"
+    ],
+    "question": "Array.contains vs HashSet.contains : différence de complexité ?",
+    "answer": {
+      "reflex": "Pour beaucoup de recherches répétées : HashSet.",
+      "code": "import scala.collection.mutable.HashSet\n\nval numbers = Array(1, 2, 3, 4)\nval numberSet = HashSet.from(numbers)\nval exists = numberSet.contains(3)",
+      "bullets": [
+        "Array.contains : O(n) par recherche.",
+        "HashSet.contains : O(1) moyen après construction O(n)."
+      ]
+    }
+  },
+  {
+    "id": "difference-array-list",
+    "type": "difference",
+    "tags": [
+      "type::difference",
+      "topic::array",
+      "topic::list"
+    ],
+    "question": "Array vs List pour un exercice algorithmique impératif ?",
+    "answer": {
+      "reflex": "Par défaut : Array.",
+      "code": "val numbers = Array(10, 20, 30)\nnumbers(1) = 99",
+      "bullets": [
+        "Array : accès par index O(1), contenu mutable, naturel pour matrices/two pointers.",
+        "List : immutable, accès par index O(n), excellente pour head/tail mais moins adaptée aux exercices indexés."
+      ]
+    }
+  },
+  {
+    "id": "difference-bfs-dfs",
+    "type": "difference",
+    "tags": [
+      "type::difference",
+      "topic::bfs",
+      "topic::dfs"
+    ],
+    "question": "BFS vs DFS : quel choix générique ?",
+    "answer": {
+      "reflex": "Plus courte distance non pondérée : BFS. Exploration complète d’une région : DFS.",
+      "bullets": [
+        "BFS utilise une Queue et explore par distance croissante.",
+        "DFS suit un chemin jusqu’au bout ; souvent plus simple pour marquer toute une composante."
+      ]
+    }
+  },
+  {
+    "id": "difference-hashmap-treemap",
+    "type": "difference",
+    "tags": [
+      "type::difference",
+      "topic::hashmap",
+      "topic::treemap"
+    ],
+    "question": "HashMap vs TreeMap : quand utiliser lequel ?",
+    "answer": {
+      "reflex": "Par défaut : HashMap. TreeMap seulement si les clés doivent rester triées.",
+      "code": "import scala.collection.mutable.HashMap\nimport scala.collection.mutable.TreeMap",
+      "bullets": [
+        "HashMap : lookup/update O(1) moyen.",
+        "TreeMap : lookup/update O(log n), clés ordonnées."
+      ]
+    }
+  },
+  {
+    "id": "difference-hashset-treeset",
+    "type": "difference",
+    "tags": [
+      "type::difference",
+      "topic::hashset",
+      "topic::treeset"
+    ],
+    "question": "HashSet vs TreeSet : quand utiliser lequel ?",
+    "answer": {
+      "reflex": "Par défaut : HashSet. TreeSet seulement si l’ordre trié est requis.",
+      "code": "import scala.collection.mutable.HashSet\nimport scala.collection.mutable.TreeSet\n\nval fastMembership = HashSet.empty[Int]\nval sortedMembership = TreeSet.empty[Int]",
+      "bullets": [
+        "HashSet : contains/add/remove O(1) moyen ; pas d’ordre trié garanti.",
+        "TreeSet : contains/add/remove O(log n) ; maintient les éléments triés.",
+        "Pour un test algorithmique sans besoin d’ordre : HashSet minimise la complexité mentale et le coût moyen."
+      ]
+    }
+  },
+  {
+    "id": "difference-inclusive-exclusive",
+    "type": "difference",
+    "tags": [
+      "type::difference",
+      "topic::ranges",
+      "topic::array"
+    ],
+    "question": "Index de fin inclusif ou exclusif : comment éviter les off-by-one ?",
+    "answer": {
+      "reflex": "Choisir une convention et la garder. Pour les fenêtres : indices inclusifs donnent `length = right - left + 1`.",
+      "code": "val currentWindowLength = rightIndex - leftIndex + 1"
+    }
+  },
+  {
+    "id": "difference-int-long",
+    "type": "difference",
+    "tags": [
+      "type::difference",
+      "topic::numbers"
+    ],
+    "question": "Int vs Long pour les calculs ?",
+    "answer": {
+      "reflex": "Si une somme ou multiplication peut dépasser ~2,1 milliards : Long.",
+      "code": "var total: Long = 0L\nfor (number <- numbers) {\n  total += number\n}"
+    }
+  },
+  {
+    "id": "difference-sorted-sortby",
+    "type": "difference",
+    "tags": [
+      "type::difference",
+      "topic::sorting"
+    ],
+    "question": "`sorted` vs `sortBy` ?",
+    "answer": {
+      "reflex": "`sorted` pour l’ordre naturel ; `sortBy` pour une clé calculée.",
+      "code": "val numbers = Array(3, 1, 2).sorted\nval people = Array((\"Alice\", 31), (\"Bob\", 24)).sortBy(person => person._2)"
+    }
+  },
+  {
+    "id": "difference-string-builder",
+    "type": "difference",
+    "tags": [
+      "type::difference",
+      "topic::string",
+      "topic::complexity"
+    ],
+    "question": "Concaténer des Strings dans une boucle ou utiliser StringBuilder ?",
+    "answer": {
+      "reflex": "Dans une boucle : StringBuilder.",
+      "code": "val builder = new StringBuilder\nfor (character <- sourceText) {\n  builder.append(character)\n}\nval result = builder.toString",
+      "bullets": [
+        "String est immutable : des concaténations répétées peuvent recopier de plus en plus de caractères.",
+        "StringBuilder accumule dans un buffer mutable puis produit la String finale."
+      ]
+    }
+  }
+]

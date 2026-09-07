@@ -1,0 +1,274 @@
+[
+  {
+    "id": "error-array-val-mutable-content",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::array",
+      "topic::mutability"
+    ],
+    "question": "Cette ligne est-elle invalide parce que `numbers` est un `val` ?",
+    "answer": {
+      "reflex": "Non. `val` fige la référence ; le contenu de `Array` reste mutable.",
+      "code": "val numbers = Array(1, 2, 3)\nnumbers(0) = 10 // valide\n\n// Interdit : numbers = Array(4, 5, 6)"
+    },
+    "front_code": "val numbers = Array(1, 2, 3)\nnumbers(0) = 10"
+  },
+  {
+    "id": "error-binary-search-endpoint",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::binary-search"
+    ],
+    "question": "Corrige la boucle de binary search : elle doit tester aussi le dernier candidat.",
+    "answer": {
+      "reflex": "Avec deux bornes inclusives : `leftIndex <= rightIndex`.",
+      "code": "while (leftIndex <= rightIndex) {\n  val middleIndex = leftIndex + (rightIndex - leftIndex) / 2\n  // ...\n}"
+    },
+    "front_code": "while (leftIndex < rightIndex) {\n  val middleIndex = leftIndex + (rightIndex - leftIndex) / 2\n  // ...\n}"
+  },
+  {
+    "id": "error-char-as-number",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::char",
+      "topic::digits"
+    ],
+    "question": "Corrige l’erreur logique : `'9'` doit représenter le chiffre 9, pas son code Unicode.",
+    "answer": {
+      "reflex": "Convertir le Char en digit avant l’arithmétique.",
+      "code": "val characters = \"19\".toCharArray\nval squared = characters.map(character => {\n  val digit = character.asDigit\n  digit * digit\n})"
+    },
+    "front_code": "val characters = \"19\".toCharArray\nval squared = characters.map(character => character * character)"
+  },
+  {
+    "id": "error-cycle-infinite-loop",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::cycle",
+      "topic::hashset"
+    ],
+    "question": "Corrige la boucle : le processus peut entrer dans un cycle qui n’atteint jamais 1.",
+    "answer": {
+      "reflex": "Mémoriser les états vus avec HashSet et arrêter quand un état se répète.",
+      "code": "import scala.collection.mutable.HashSet\n\nval seenNumbers = HashSet.empty[Int]\nwhile (currentNumber != 1 && !seenNumbers.contains(currentNumber)) {\n  seenNumbers += currentNumber\n  currentNumber = nextNumber(currentNumber)\n}"
+    },
+    "front_code": "while (currentNumber != 1) {\n  currentNumber = nextNumber(currentNumber)\n}"
+  },
+  {
+    "id": "error-exclusive-right-return",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::sliding-window"
+    ],
+    "question": "Corrige l’ambiguïté : `rightIndex` pointe sur le prochain élément, mais on veut retourner le dernier index inclus.",
+    "answer": {
+      "reflex": "Si la borne droite est exclusive, le dernier index inclus vaut `rightIndex - 1`.",
+      "code": "currentWindowSum += numbers(rightIndex)\nrightIndex += 1\nbestRightIndex = rightIndex - 1"
+    },
+    "front_code": "currentWindowSum += numbers(rightIndex)\nrightIndex += 1\nbestRightIndex = rightIndex"
+  },
+  {
+    "id": "error-grid-bounds",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::matrix"
+    ],
+    "question": "Corrige l’erreur : lire un voisin de matrice sans sortir des bounds.",
+    "answer": {
+      "reflex": "Calculer les coordonnées, vérifier les bounds, puis accéder.",
+      "code": "val neighbourRow = currentRow + rowChange\nval neighbourColumn = currentColumn + columnChange\n\nval isInsideMatrix =\n  neighbourRow >= 0 && neighbourRow < rowCount &&\n  neighbourColumn >= 0 && neighbourColumn < columnCount\n\nif (isInsideMatrix) {\n  val neighbourValue = matrix(neighbourRow)(neighbourColumn)\n}"
+    },
+    "front_code": "val neighbourValue = matrix(currentRow + rowChange)(currentColumn + columnChange)"
+  },
+  {
+    "id": "error-hashmap-missing-key",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::hashmap"
+    ],
+    "question": "Corrige le compteur : la clé peut ne pas encore exister.",
+    "answer": {
+      "reflex": "Utiliser `getOrElse` pour le premier passage.",
+      "code": "countByValue(currentValue) = countByValue.getOrElse(currentValue, 0) + 1"
+    },
+    "front_code": "countByValue(currentValue) = countByValue(currentValue) + 1"
+  },
+  {
+    "id": "error-index-vs-value",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::array",
+      "topic::char"
+    ],
+    "question": "Corrige l’erreur logique : calculer la somme des carrés des chiffres contenus dans `digits`.",
+    "answer": {
+      "reflex": "Le calcul doit utiliser la valeur du tableau, pas son index.",
+      "code": "var total = 0\nfor (currentIndex <- digits.indices) {\n  val digit = digits(currentIndex).asDigit\n  total += digit * digit\n}"
+    },
+    "front_code": "var total = 0\nfor (currentIndex <- digits.indices) {\n  total += currentIndex * currentIndex\n}"
+  },
+  {
+    "id": "error-indices-not-indexes",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::array"
+    ],
+    "question": "Corrige l’erreur : parcourir les indices valides d’un Array.",
+    "answer": {
+      "reflex": "La propriété Scala est `indices`.",
+      "code": "for (currentIndex <- numbers.indices) {\n  println(numbers(currentIndex))\n}"
+    },
+    "front_code": "for (currentIndex <- numbers.indexes) {\n  println(numbers(currentIndex))\n}"
+  },
+  {
+    "id": "error-int-overflow",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::numbers"
+    ],
+    "question": "Corrige le risque d’overflow sur la somme de beaucoup d’Int.",
+    "answer": {
+      "reflex": "Accumuler dans un Long.",
+      "code": "var total: Long = 0L\nfor (number <- numbers) {\n  total += number\n}"
+    },
+    "front_code": "var total = 0\nfor (number <- numbers) {\n  total += number\n}"
+  },
+  {
+    "id": "error-miss-last-element",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::array"
+    ],
+    "question": "Corrige l’erreur de bound : la boucle doit pouvoir traiter le dernier élément.",
+    "answer": {
+      "reflex": "Pour parcourir tous les indices : `< numbers.length`.",
+      "code": "var currentIndex = 0\nwhile (currentIndex < numbers.length) {\n  process(numbers(currentIndex))\n  currentIndex += 1\n}"
+    },
+    "front_code": "var currentIndex = 0\nwhile (currentIndex < numbers.length - 1) {\n  process(numbers(currentIndex))\n  currentIndex += 1\n}"
+  },
+  {
+    "id": "error-negative-odd",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::parity"
+    ],
+    "question": "Corrige le test d’impair pour qu’il fonctionne aussi avec les nombres négatifs.",
+    "answer": {
+      "reflex": "Comparer à zéro, pas à 1.",
+      "code": "val isOdd = number % 2 != 0"
+    },
+    "front_code": "val isOdd = number % 2 == 1"
+  },
+  {
+    "id": "error-prefix-sum-range",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::prefix-sum"
+    ],
+    "question": "Corrige la formule : somme inclusive entre `startIndex` et `endIndexInclusive` avec prefix sums de taille n+1.",
+    "answer": {
+      "reflex": "La borne droite inclusive devient `endIndexInclusive + 1` dans le prefix array.",
+      "code": "val rangeSum = prefixSums(endIndexInclusive + 1) - prefixSums(startIndex)"
+    },
+    "front_code": "val rangeSum = prefixSums(endIndexInclusive) - prefixSums(startIndex)"
+  },
+  {
+    "id": "error-row-column-swapped",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::matrix"
+    ],
+    "question": "Corrige l’accès : la matrice est `matrix(rowIndex)(columnIndex)`.",
+    "answer": {
+      "reflex": "L’Array extérieur représente les rows.",
+      "code": "val value = matrix(rowIndex)(columnIndex)"
+    },
+    "front_code": "val value = matrix(columnIndex)(rowIndex)"
+  },
+  {
+    "id": "error-sliding-window-negatives",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::sliding-window"
+    ],
+    "question": "Pourquoi cette sliding window de somme peut être incorrecte si `numbers` contient des négatifs ?",
+    "answer": {
+      "reflex": "La somme n’est plus monotone : retirer à gauche peut augmenter la somme. Ce pattern de somme suppose ici des valeurs positives/non négatives.",
+      "code": "// Si des nombres négatifs sont possibles, utiliser un autre pattern adapté,\n// par exemple prefix sum + HashMap pour certaines questions de somme."
+    },
+    "front_code": "while (currentWindowSum >= target) {\n  currentWindowSum -= numbers(leftIndex)\n  leftIndex += 1\n}"
+  },
+  {
+    "id": "error-string-concat-loop",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::string",
+      "topic::complexity"
+    ],
+    "question": "Corrige l’approche potentiellement O(n²) : construire une String caractère par caractère.",
+    "answer": {
+      "reflex": "StringBuilder.",
+      "code": "val builder = new StringBuilder\nfor (character <- text) {\n  builder.append(character)\n}\nval result = builder.toString"
+    },
+    "front_code": "var result = \"\"\nfor (character <- text) {\n  result = result + character\n}"
+  },
+  {
+    "id": "error-two-sum-store-too-early",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::hashmap",
+      "topic::two-sum"
+    ],
+    "question": "Corrige Two Sum : ne pas réutiliser le même élément deux fois.",
+    "answer": {
+      "reflex": "Chercher le complément avant d’ajouter l’élément courant.",
+      "code": "val requiredNumber = target - currentNumber\nif (indexBySeenNumber.contains(requiredNumber)) {\n  return Array(indexBySeenNumber(requiredNumber), currentIndex)\n}\nindexBySeenNumber(currentNumber) = currentIndex"
+    },
+    "front_code": "indexBySeenNumber(currentNumber) = currentIndex\nval requiredNumber = target - currentNumber\nif (indexBySeenNumber.contains(requiredNumber)) {\n  return Array(indexBySeenNumber(requiredNumber), currentIndex)\n}"
+  },
+  {
+    "id": "error-use-working-variable",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::digits"
+    ],
+    "question": "Corrige l’erreur : parcourir les chiffres restants, pas toujours le nombre original.",
+    "answer": {
+      "reflex": "Le modulo doit utiliser `remainingNumber`.",
+      "code": "var remainingNumber = number\nwhile (remainingNumber > 0) {\n  val lastDigit = remainingNumber % 10\n  remainingNumber /= 10\n}"
+    },
+    "front_code": "var remainingNumber = number\nwhile (remainingNumber > 0) {\n  val lastDigit = number % 10\n  remainingNumber /= 10\n}"
+  },
+  {
+    "id": "error-window-length",
+    "type": "error",
+    "tags": [
+      "type::error",
+      "topic::sliding-window"
+    ],
+    "question": "Corrige la longueur d’une fenêtre dont les deux indices sont inclusifs.",
+    "answer": {
+      "reflex": "Ajouter 1.",
+      "code": "val currentWindowLength = rightIndex - leftIndex + 1"
+    },
+    "front_code": "val currentWindowLength = rightIndex - leftIndex"
+  }
+]

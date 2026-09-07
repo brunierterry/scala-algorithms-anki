@@ -1,0 +1,292 @@
+[
+  {
+    "id": "method-array-empty",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::array"
+    ],
+    "question": "Comment créer un Array[Int] vide ?",
+    "answer": {
+      "reflex": "`Array.empty[Int]`.",
+      "code": "val result: Array[Int] = Array.empty[Int]"
+    }
+  },
+  {
+    "id": "method-array-fill",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::array"
+    ],
+    "question": "Comment créer un Array rempli avec une valeur initiale ?",
+    "answer": {
+      "reflex": "`Array.fill(size)(value)`.",
+      "code": "val counters = Array.fill(26)(0)"
+    }
+  },
+  {
+    "id": "method-array-filter",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::array"
+    ],
+    "question": "Comment garder seulement certains éléments d’un Array ?",
+    "answer": {
+      "reflex": "`filter`.",
+      "code": "val numbers = Array(1, 2, 3, 4)\nval evenNumbers = numbers.filter(number => number % 2 == 0)"
+    }
+  },
+  {
+    "id": "method-array-indices",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::array"
+    ],
+    "question": "Quelle propriété donne tous les indices valides d’un Array ?",
+    "answer": {
+      "reflex": "`array.indices`.",
+      "code": "val numbers = Array(10, 20, 30)\nfor (currentIndex <- numbers.indices) {\n  println(numbers(currentIndex))\n}"
+    }
+  },
+  {
+    "id": "method-array-map",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::array"
+    ],
+    "question": "Comment transformer chaque élément d’un Array ?",
+    "answer": {
+      "reflex": "`map`.",
+      "code": "val numbers = Array(1, 2, 3)\nval squares = numbers.map(number => number * number)"
+    }
+  },
+  {
+    "id": "method-array-min-max",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::array"
+    ],
+    "question": "Comment obtenir le minimum ou le maximum d’un Array non vide ?",
+    "answer": {
+      "reflex": "`min` et `max`.",
+      "code": "val numbers = Array(7, 2, 9)\nval minimum = numbers.min // 2\nval maximum = numbers.max // 9"
+    }
+  },
+  {
+    "id": "method-array-of-dim",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::array",
+      "topic::matrix"
+    ],
+    "question": "Comment créer un Array 2D initialisé par défaut ?",
+    "answer": {
+      "reflex": "`Array.ofDim[Type](rows, columns)`.",
+      "code": "val rowCount = 3\nval columnCount = 4\nval matrix = Array.ofDim[Int](rowCount, columnCount)"
+    }
+  },
+  {
+    "id": "method-array-reverse",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::array"
+    ],
+    "question": "Comment inverser l’ordre d’un Array ?",
+    "answer": {
+      "reflex": "`reverse`.",
+      "code": "val numbers = Array(1, 2, 3)\nval reversed = numbers.reverse // 3, 2, 1"
+    }
+  },
+  {
+    "id": "method-array-sort-by",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::array",
+      "topic::sorting"
+    ],
+    "question": "Comment trier des éléments selon une clé ?",
+    "answer": {
+      "reflex": "`sortBy`.",
+      "code": "val people = Array((\"Alice\", 31), (\"Bob\", 24))\nval byAge = people.sortBy(person => person._2)"
+    }
+  },
+  {
+    "id": "method-array-sorted",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::array",
+      "topic::sorting"
+    ],
+    "question": "Comment trier un Array dans l’ordre naturel ?",
+    "answer": {
+      "reflex": "`sorted` ; coût général O(n log n).",
+      "code": "val numbers = Array(8, 3, 1, 5)\nval sortedNumbers = numbers.sorted // 1, 3, 5, 8"
+    }
+  },
+  {
+    "id": "method-array-sum",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::array"
+    ],
+    "question": "Comment calculer la somme des éléments numériques d’un Array ?",
+    "answer": {
+      "reflex": "`sum`.",
+      "code": "val numbers = Array(2, 3, 5)\nval total = numbers.sum // 10"
+    }
+  },
+  {
+    "id": "method-array-zip-with-index",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::array"
+    ],
+    "question": "Comment parcourir valeurs et indices ensemble ?",
+    "answer": {
+      "reflex": "`zipWithIndex`.",
+      "code": "val names = Array(\"Alice\", \"Bob\")\nfor ((name, currentIndex) <- names.zipWithIndex) {\n  println(s\"$currentIndex -> $name\")\n}"
+    }
+  },
+  {
+    "id": "method-char-as-digit",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::char",
+      "topic::digits"
+    ],
+    "question": "Quelle méthode transforme un Char numérique en Int ?",
+    "answer": {
+      "reflex": "`character.asDigit`.",
+      "code": "val character = '9'\nval digit: Int = character.asDigit // 9"
+    }
+  },
+  {
+    "id": "method-char-is-digit",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::char"
+    ],
+    "question": "Comment vérifier qu’un Char est un chiffre ?",
+    "answer": {
+      "reflex": "`character.isDigit`.",
+      "code": "val character = '7'\nval isDigit: Boolean = character.isDigit"
+    }
+  },
+  {
+    "id": "method-char-is-letter",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::char"
+    ],
+    "question": "Comment vérifier qu’un Char est une lettre ?",
+    "answer": {
+      "reflex": "`character.isLetter`.",
+      "code": "val character = 'A'\nval isLetter: Boolean = character.isLetter"
+    }
+  },
+  {
+    "id": "method-hashmap-get",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::hashmap"
+    ],
+    "question": "Comment lire une clé de HashMap sans exception ?",
+    "answer": {
+      "reflex": "`get` retourne un Option.",
+      "code": "import scala.collection.mutable.HashMap\n\nval ageByName = HashMap(\"Alice\" -> 31)\nval maybeAge: Option[Int] = ageByName.get(\"Bob\")"
+    }
+  },
+  {
+    "id": "method-hashmap-get-or-else",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::hashmap"
+    ],
+    "question": "Comment lire une valeur de HashMap avec une valeur par défaut ?",
+    "answer": {
+      "reflex": "`getOrElse(key, defaultValue)`.",
+      "code": "import scala.collection.mutable.HashMap\n\nval counts = HashMap(\"apple\" -> 2)\nval orangeCount = counts.getOrElse(\"orange\", 0)"
+    }
+  },
+  {
+    "id": "method-hashmap-remove",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::hashmap"
+    ],
+    "question": "Comment enlever une clé d’une mutable.HashMap ?",
+    "answer": {
+      "reflex": "`map -= key`.",
+      "code": "import scala.collection.mutable.HashMap\n\nval scores = HashMap(\"Alice\" -> 10, \"Bob\" -> 8)\nscores -= \"Bob\""
+    }
+  },
+  {
+    "id": "method-hashmap-update",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::hashmap"
+    ],
+    "question": "Comment ajouter ou mettre à jour une entrée de mutable.HashMap ?",
+    "answer": {
+      "reflex": "`map(key) = value`.",
+      "code": "import scala.collection.mutable.HashMap\n\nval indexByNumber = HashMap.empty[Int, Int]\nindexByNumber(42) = 3"
+    }
+  },
+  {
+    "id": "method-hashset-add",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::hashset"
+    ],
+    "question": "Comment ajouter une valeur à mutable.HashSet ?",
+    "answer": {
+      "reflex": "`set += value`.",
+      "code": "import scala.collection.mutable.HashSet\n\nval seenNumbers = HashSet.empty[Int]\nseenNumbers += 42"
+    }
+  },
+  {
+    "id": "method-hashset-contains",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::hashset"
+    ],
+    "question": "Comment tester la présence d’une valeur dans HashSet ?",
+    "answer": {
+      "reflex": "`contains` ; O(1) moyen.",
+      "code": "import scala.collection.mutable.HashSet\n\nval visited = HashSet(4, 8, 15)\nval wasVisited = visited.contains(8)"
+    }
+  },
+  {
+    "id": "method-hashset-exists",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::hashset"
+    ],
+    "question": "Comment vérifier si au moins un élément d’un Set satisfait une condition ?",
+    "answer": {
+      "reflex": "`exists(predicate)`.",
+      "code": "import scala.collection.mutable.HashSet\n\nval values = HashSet(3, 7, 12)\nval hasEvenValue = values.exists(number => number % 2 == 0)"
+    }
+  }
+]

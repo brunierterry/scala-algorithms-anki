@@ -1,0 +1,106 @@
+[
+  {
+    "id": "import-arraybuffer",
+    "type": "import",
+    "tags": [
+      "type::import",
+      "topic::collections"
+    ],
+    "question": "Quel import complet utiliser pour mutable.ArrayBuffer ?",
+    "answer": {
+      "reflex": "`import scala.collection.mutable.ArrayBuffer`",
+      "code": "import scala.collection.mutable.ArrayBuffer"
+    }
+  },
+  {
+    "id": "import-hashmap",
+    "type": "import",
+    "tags": [
+      "type::import",
+      "topic::hashmap"
+    ],
+    "question": "Quel import complet utiliser pour mutable.HashMap ?",
+    "answer": {
+      "reflex": "`import scala.collection.mutable.HashMap`",
+      "code": "import scala.collection.mutable.HashMap"
+    }
+  },
+  {
+    "id": "import-hashset",
+    "type": "import",
+    "tags": [
+      "type::import",
+      "topic::hashset"
+    ],
+    "question": "Quel import complet utiliser pour mutable.HashSet ?",
+    "answer": {
+      "reflex": "`import scala.collection.mutable.HashSet`",
+      "code": "import scala.collection.mutable.HashSet"
+    }
+  },
+  {
+    "id": "import-mutable",
+    "type": "import",
+    "tags": [
+      "type::import",
+      "topic::collections"
+    ],
+    "question": "Quel import permet de préfixer les collections mutables avec `mutable.` ?",
+    "answer": {
+      "reflex": "`import scala.collection.mutable`",
+      "code": "import scala.collection.mutable"
+    }
+  },
+  {
+    "id": "import-priorityqueue",
+    "type": "import",
+    "tags": [
+      "type::import",
+      "topic::heap"
+    ],
+    "question": "Quel import complet utiliser pour mutable.PriorityQueue ?",
+    "answer": {
+      "reflex": "`import scala.collection.mutable.PriorityQueue`",
+      "code": "import scala.collection.mutable.PriorityQueue"
+    }
+  },
+  {
+    "id": "import-queue",
+    "type": "import",
+    "tags": [
+      "type::import",
+      "topic::queue"
+    ],
+    "question": "Quel import complet utiliser pour mutable.Queue ?",
+    "answer": {
+      "reflex": "`import scala.collection.mutable.Queue`",
+      "code": "import scala.collection.mutable.Queue"
+    }
+  },
+  {
+    "id": "import-treemap",
+    "type": "import",
+    "tags": [
+      "type::import",
+      "topic::treemap"
+    ],
+    "question": "Quel import complet utiliser pour mutable.TreeMap ?",
+    "answer": {
+      "reflex": "`import scala.collection.mutable.TreeMap`.",
+      "code": "import scala.collection.mutable.TreeMap"
+    }
+  },
+  {
+    "id": "import-treeset",
+    "type": "import",
+    "tags": [
+      "type::import",
+      "topic::treeset"
+    ],
+    "question": "Quel import complet utiliser pour mutable.TreeSet ?",
+    "answer": {
+      "reflex": "`import scala.collection.mutable.TreeSet`.",
+      "code": "import scala.collection.mutable.TreeSet"
+    }
+  }
+]

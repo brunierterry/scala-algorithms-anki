@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["format_version", "deck"],
+  "properties": {
+    "format_version": {"type": "integer", "const": 1},
+    "deck": {
+      "type": "object",
+      "required": ["name", "deck_id", "model_id", "language", "code_language"],
+      "properties": {
+        "name": {"type": "string"},
+        "deck_id": {"type": "integer"},
+        "model_id": {"type": "integer"},
+        "language": {"type": "string"},
+        "code_language": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

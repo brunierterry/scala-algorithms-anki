@@ -1,0 +1,279 @@
+[
+  {
+    "id": "method-hashset-remove",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::hashset"
+    ],
+    "question": "Comment enlever une valeur de mutable.HashSet ?",
+    "answer": {
+      "reflex": "`set -= value`.",
+      "code": "import scala.collection.mutable.HashSet\n\nval activeIds = HashSet(10, 20, 30)\nactiveIds -= 20"
+    }
+  },
+  {
+    "id": "method-math-abs",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::math"
+    ],
+    "question": "Comment obtenir la valeur absolue ?",
+    "answer": {
+      "reflex": "`math.abs`.",
+      "code": "val difference = -12\nval distance = math.abs(difference) // 12"
+    }
+  },
+  {
+    "id": "method-math-min-max",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::math"
+    ],
+    "question": "Comment comparer rapidement deux nombres ?",
+    "answer": {
+      "reflex": "`math.min` et `math.max`.",
+      "code": "val firstValue = 7\nval secondValue = 11\nval smaller = math.min(firstValue, secondValue)\nval larger = math.max(firstValue, secondValue)"
+    }
+  },
+  {
+    "id": "method-mk-string",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::collections",
+      "topic::string"
+    ],
+    "question": "Comment transformer une collection de valeurs en String ?",
+    "answer": {
+      "reflex": "`mkString`.",
+      "code": "val numbers = Array(1, 2, 3)\nval csv = numbers.mkString(\",\") // \"1,2,3\""
+    }
+  },
+  {
+    "id": "method-queue-enqueue-dequeue",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::queue",
+      "topic::bfs"
+    ],
+    "question": "Comment ajouter et retirer des éléments d’une mutable.Queue ?",
+    "answer": {
+      "reflex": "`enqueue` pour ajouter, `dequeue` pour retirer en FIFO.",
+      "code": "import scala.collection.mutable.Queue\n\nval pending = Queue.empty[Int]\npending.enqueue(10)\npending.enqueue(20)\nval firstValue = pending.dequeue() // 10"
+    }
+  },
+  {
+    "id": "method-string-builder",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment construire efficacement une String dans une boucle ?",
+    "answer": {
+      "reflex": "Utiliser `StringBuilder.append` puis `toString`.",
+      "code": "val builder = new StringBuilder\nbuilder.append(\"abc\")\nbuilder.append('d')\nval result = builder.toString"
+    }
+  },
+  {
+    "id": "method-string-contains",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment vérifier qu’une String contient une sous-chaîne ?",
+    "answer": {
+      "reflex": "`contains`.",
+      "code": "val text = \"scala algorithms\"\nval containsScala = text.contains(\"scala\")"
+    }
+  },
+  {
+    "id": "method-string-drop",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment enlever les N premiers caractères d’une String ?",
+    "answer": {
+      "reflex": "`drop(count)`.",
+      "code": "val text = \"algorithm\"\nval suffix = text.drop(4) // \"rithm\""
+    }
+  },
+  {
+    "id": "method-string-drop-right",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment enlever les N derniers caractères d’une String ?",
+    "answer": {
+      "reflex": "`dropRight(count)`.",
+      "code": "val text = \"algorithm\"\nval prefix = text.dropRight(4) // \"algor\""
+    }
+  },
+  {
+    "id": "method-string-ends-with",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment vérifier le suffixe d’une String ?",
+    "answer": {
+      "reflex": "`endsWith`.",
+      "code": "val fileName = \"report.csv\"\nval isCsv = fileName.endsWith(\".csv\")"
+    }
+  },
+  {
+    "id": "method-string-filter",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment garder seulement les caractères qui respectent une condition ?",
+    "answer": {
+      "reflex": "`filter`.",
+      "code": "val text = \"a1b2c3\"\nval digitsOnly = text.filter(character => character.isDigit) // \"123\""
+    }
+  },
+  {
+    "id": "method-string-index-of",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment retrouver l’index de la première occurrence dans une String ?",
+    "answer": {
+      "reflex": "`indexOf`.",
+      "code": "val text = \"banana\"\nval firstAIndex = text.indexOf('a') // 1"
+    }
+  },
+  {
+    "id": "method-string-reverse",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment inverser l’ordre des caractères d’une String ?",
+    "answer": {
+      "reflex": "`reverse`.",
+      "code": "val text = \"abc\"\nval reversed = text.reverse // \"cba\""
+    }
+  },
+  {
+    "id": "method-string-slice",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string",
+      "topic::array"
+    ],
+    "question": "Comment extraire une tranche d’une String ou d’un Array avec une fin exclusive ?",
+    "answer": {
+      "reflex": "`slice(startIndex, endIndexExclusive)`.",
+      "code": "val text = \"abcdef\"\nval part = text.slice(1, 4) // \"bcd\""
+    }
+  },
+  {
+    "id": "method-string-split",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment découper une String avec un séparateur ?",
+    "answer": {
+      "reflex": "`split(separator)`.",
+      "code": "val line = \"red,green,blue\"\nval values: Array[String] = line.split(\",\")"
+    }
+  },
+  {
+    "id": "method-string-starts-with",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment vérifier le préfixe d’une String ?",
+    "answer": {
+      "reflex": "`startsWith`.",
+      "code": "val fileName = \"report.csv\"\nval isReport = fileName.startsWith(\"report\")"
+    }
+  },
+  {
+    "id": "method-string-substring",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment extraire une sous-chaîne avec une borne de fin exclusive ?",
+    "answer": {
+      "reflex": "`substring(startIndex, endIndexExclusive)`.",
+      "code": "val text = \"Hello Scala\"\nval word = text.substring(6, 11) // \"Scala\""
+    }
+  },
+  {
+    "id": "method-string-take",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment prendre les N premiers caractères d’une String ?",
+    "answer": {
+      "reflex": "`take(count)`.",
+      "code": "val text = \"algorithm\"\nval prefix = text.take(4) // \"algo\""
+    }
+  },
+  {
+    "id": "method-string-take-right",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Comment prendre les N derniers caractères d’une String ?",
+    "answer": {
+      "reflex": "`takeRight(count)`.",
+      "code": "val text = \"algorithm\"\nval suffix = text.takeRight(4) // \"ithm\""
+    }
+  },
+  {
+    "id": "method-string-to-char-array",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string",
+      "topic::array"
+    ],
+    "question": "Quelle méthode transforme une String en Array[Char] ?",
+    "answer": {
+      "reflex": "`toCharArray`.",
+      "code": "val text = \"scala\"\nval characters: Array[Char] = text.toCharArray"
+    }
+  },
+  {
+    "id": "method-string-trim",
+    "type": "method",
+    "tags": [
+      "type::method",
+      "topic::string"
+    ],
+    "question": "Quelle méthode enlève les espaces au début et à la fin d’une String ?",
+    "answer": {
+      "reflex": "`trim`.",
+      "code": "val rawText = \"  scala  \"\nval trimmedText = rawText.trim // \"scala\""
+    }
+  }
+]
